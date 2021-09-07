@@ -1,14 +1,36 @@
 <template lang="pug">
-q-page.flex.flex-center
-  img(src="~assets/iconos.png")
+q-page(padding)
+  docente(v-if="userData.group == 'docente'")
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import docente from 'components/dashboard/docente'
+export default {
+  components:{
+    docente
+  },
+  setup () {
+    const $store = useStore()
+    const userData = computed (() => {
+      return $store.getters['api/getUser']
+    }) 
+    return {
+      userData
+    }
+  },
 
-export default defineComponent({
-  name: 'PageDashboard'
-})
+  methods: {
+    loadItems () {
+      
+    }
+  },
+  mounted () {
+    this.loadItems()
+  }
+
+}
 </script>
 
 

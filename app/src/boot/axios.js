@@ -1,24 +1,35 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
-
+import { useStore } from 'vuex'
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
 // If any client changes this (global) instance, it might be a
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' })
+const api = axios.create({ 
+  baseURL: 'https://previo.website/iconos/api/api'
+})
 
-export default boot(({ app }) => {
-  // for use inside Vue files (Options API) through this.$axios and this.$api
+
+
+//api.defaults.headers.common['Cockpit-Token'] = 'a69178b33f2a7cf0b7b8715cd62174';
+api.defaults.headers.common['Cockpit-Token'] = 'c1c68946b8b3862546f39faea83a85';
+
+export default boot(({ app, store }) => {
+  const isAuth = store.getters['api/getUser']!=null
+    let user = null
+    if(isAuth){
+      user = store.getters['api/getUser']
+      if(user.api_key){
+        api.defaults.headers.common['Cockpit-Token'] = user.api_key;
+      }
+
+    }
 
   app.config.globalProperties.$axios = axios
-  // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
-  //       so you won't necessarily have to import axios in each vue file
-
   app.config.globalProperties.$api = api
-  // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
-  //       so you can easily perform requests against your app's API
+  
 })
 
 export { api }
