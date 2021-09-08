@@ -2,17 +2,19 @@
 q-page.flex.flex-center.column
   q-card.bg-dark(style="width: 320px;").shadow-20
     q-card-section.text-center.q-my-sm
-      img(src="~assets/iconos.png" style="max-height: 30px")
+      //img(src="~assets/iconos.png" style="max-height: 30px")
+      q-img(src="~/assets/logodh.png")
     q-card-section
       q-form(@submit.prevent="loginFn")
         q-input(label="Usuario / Cuenta" rounded standout dark dense v-model="authuser")
         q-input(label="Contraseña" rounded standout dark dense type="password" v-model="authpass").q-mt-sm
         .text-center.q-mt-lg
           q-btn(label="Ingresar" color="secondary" rounded unelevated type="submit")
+    q-card-section
       q-separator(spaced)
       //.text-center
         q-btn(size="sm" flat label="Recuperar contraseña" padding="0" color="negative")
-      q-img(src="~/assets/logodh.png")
+      
       q-img(src="~/assets/logouam.png")
   q-card.q-ma-sm.fixed-bottom-left
     q-card-section.text-center

@@ -12,8 +12,8 @@ q-layout(view="lHh lpR lFf")
     .q-pa-sm.full-height
       section.full-height.rounded-borders.shadow-24.text-white.text-bold.drawerContainer
         .q-px-sm.q-py-lg.text-center
-          img(alt="Iconos PL" src="~assets/iconos.png" style="height: 24px; vertical-align:middle;")
-        
+          //img(alt="Iconos PL" src="~assets/iconos.png" style="height: 24px; vertical-align:middle;")
+          q-img(src="~/assets/logodh.png")
         q-list(separator).q-pa-sm
           template( v-for="(i, index) in menuItems" )
             q-item(clickable :to="i.path" active-class="text-accent" v-if="visibleForUser(i)").rounded-borders
@@ -24,7 +24,6 @@ q-layout(view="lHh lpR lFf")
         footer.flex.column.q-pa-sm.text-center.items-center
           q-btn(label="Cerrar sesión" rounded color="white" text-color="dark" size="sm" no-caps @click="logoutFN")
           q-separator(spaced).full-width
-          q-img(src="~/assets/logodh.png")
           q-img(src="~/assets/logouam.png")
           .text-caption.text-negative.copy Instituto de Investigación en Comunicación y Cultura
   q-page-container: router-view/
