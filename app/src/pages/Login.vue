@@ -22,10 +22,6 @@ q-page.flex.flex-center.column
         span usuario
         span.text-dark  / 
         span contraseña
-      div
-        span.text-primary admin
-        span.text-dark  / 
-        span.text-secondary admin
       q-separator
       div
         span.text-primary docente
