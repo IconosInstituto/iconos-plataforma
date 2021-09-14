@@ -20,9 +20,9 @@ const routes = [
     path: '/desempeno',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Desempeno.vue') },
+      { path: '/desempeno/:id', component: () => import('pages/Desempeno.vue') },
     ],
-    meta: { forAuth: true, group: ['admin','coordinador','docente'] }
+    meta: { forAuth: true, group: ['docente', 'estudiante'] }
   },
   {
     path: '/configuracion',

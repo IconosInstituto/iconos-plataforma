@@ -6,8 +6,8 @@ q-page.flex.flex-center.column
       q-img(src="~/assets/logodh.png")
     q-card-section
       q-form(@submit.prevent="loginFn")
-        q-input(label="Usuario / Cuenta" rounded standout dark dense v-model="authuser")
-        q-input(label="Contraseña" rounded standout dark dense type="password" v-model="authpass").q-mt-sm
+        q-input(label="Usuario / Cuenta"  standout dark dense v-model="authuser")
+        q-input(label="Contraseña"  standout dark dense type="password" v-model="authpass").q-mt-sm
         .text-center.q-mt-lg
           q-btn(label="Ingresar" color="primary"  unelevated type="submit")
     q-card-section
@@ -29,7 +29,7 @@ q-page.flex.flex-center.column
         span.text-secondary docente
       q-separator
       div
-        span.text-primary 1234
+        span.text-primary 01110284
         span.text-dark  / 
         span.text-secondary estudiante
       q-separator

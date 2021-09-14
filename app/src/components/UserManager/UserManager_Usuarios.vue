@@ -1,6 +1,5 @@
 <template lang="pug">
 div
-
     q-table.shadow-0(:loading="loading" no-data-label="Sin datos" :rows="datausers" :columns="columns" dense)
         template(v-slot:top)
             .flex.justify-end.full-width: q-btn(:label="'Nuevo '+usergroup" color="primary" unelevated @click="edituserDialog(cleanuser, true)"  no-caps)
@@ -137,9 +136,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-.q-table{
-
-}
-</style>

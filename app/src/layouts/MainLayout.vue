@@ -41,6 +41,8 @@ export default{
     const $router = useRouter()
 
     const menuItems = ref([
+      { label: 'Investigación', path: '/dashboard', icon:'description', group: ['estudiante']},
+      { label: 'Investigaciones', path: '/dashboard', icon:'description', group: ['docente']},
       { label: 'Panel', path: '/dashboard', icon:'insights', group: ['admin', 'coordinador']},
       { label: 'Estudiantes', path: '/estudiantes', icon:'people_alt', group: ['admin', 'coordinador']},
       { label: 'Docentes', path: '/docentes', icon:'contact_page', group: ['admin', 'coordinador']},

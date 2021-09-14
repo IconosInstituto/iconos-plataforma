@@ -1,5 +1,6 @@
 <template lang="pug">
 q-page(padding)
+  estudiante(v-if="userData.group == 'estudiante'")
   docente(v-if="userData.group == 'docente'")
   coordinador(v-if="userData.group == 'coordinador'")
 </template>
@@ -7,10 +8,12 @@ q-page(padding)
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import estudiante from 'components/dashboard/estudiante'
 import docente from 'components/dashboard/docente'
 import coordinador from 'components/dashboard/coordinador'
 export default {
   components:{
+    estudiante,
     docente,
     coordinador
   },
