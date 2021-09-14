@@ -22,15 +22,41 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Desempeno.vue') },
     ],
-    meta: { forAuth: true, group: ['admin','docente'] }
+    meta: { forAuth: true, group: ['admin','coordinador','docente'] }
   },
   {
     path: '/configuracion',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Configuracion.vue') },
+      { path: '', component: () => import('pages/UserManager.vue') },
+      { path: '/estudiantes', component: () => import('pages/UserManager.vue') },
+      { path: '/docentes', component: () => import('pages/UserManager.vue') },
     ],
-    meta: { forAuth: true, group: ['admin'] }
+    meta: { forAuth: true, group: ['admin', 'coordinador'] }
+  },
+  {
+    path: '/estudiante',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '/estudiante/:id', component: () => import('pages/EstudianteManager.vue') },
+    ],
+    meta: { forAuth: true, group: ['admin', 'coordinador'] }
+  },
+  {
+    path: '/docente',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '/docente/:id', component: () => import('pages/DocenteManager.vue') },
+    ],
+    meta: { forAuth: true, group: ['admin', 'coordinador'] }
+  },
+  {
+    path: '/periodos',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Periodos.vue') },
+    ],
+    meta: { forAuth: true,  group: ['admin', 'coordinador'] }
   },
 
   // Always leave this as last one,

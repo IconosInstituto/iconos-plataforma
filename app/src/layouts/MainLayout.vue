@@ -1,5 +1,5 @@
 <template lang="pug">
-q-layout(view="lHh lpR lFf")
+q-layout(view="lhr LpR fFf")
   q-header().bg-transparent
     .q-pa-sm
       q-toolbar().text-dark.bg-white.rounded-borders
@@ -22,10 +22,10 @@ q-layout(view="lHh lpR lFf")
 
 
         footer.flex.column.q-pa-sm.text-center.items-center
-          q-btn(label="Cerrar sesión" rounded color="white" text-color="dark" size="sm" no-caps @click="logoutFN")
+          q-btn(label="Cerrar sesión" color="white" text-color="dark" size="sm" no-caps @click="logoutFN")
           q-separator(spaced).full-width
           q-img(src="~/assets/logouam.png")
-          .text-caption.text-negative.copy Instituto de Investigación en Comunicación y Cultura
+
   q-page-container: router-view/
 </template>
 <script>
@@ -41,12 +41,13 @@ export default{
     const $router = useRouter()
 
     const menuItems = ref([
-      { label: 'Inicio', path: '/dashboard', icon:'play_arrow'},
-      { label: 'Estudiantes', path: '/estudiantes', icon:'people_alt'},
-      { label: 'Candidatura', path: '/candidatura', icon:'auto_awesome'},
-      { label: 'Desempeño', path: '/desempeno', icon:'psychology'},
-      { label: 'Configuración', path: '/configuracion', icon:'more_vert', group: ['admin']},
-      { label: 'Mi cuenta', path: '/mi-cuenta', icon:'badge'},
+      { label: 'Panel', path: '/dashboard', icon:'insights', group: ['admin', 'coordinador']},
+      { label: 'Estudiantes', path: '/estudiantes', icon:'people_alt', group: ['admin', 'coordinador']},
+      { label: 'Docentes', path: '/docentes', icon:'contact_page', group: ['admin', 'coordinador']},
+      { label: 'Periodos', path: '/periodos', icon:'date_range', group: ['admin', 'coordinador']},
+      //{ label: 'Candidatura', path: '/candidatura', icon:'auto_awesome'},
+      //{ label: 'Desempeño', path: '/desempeno', icon:'psychology'},
+      //{ label: 'Estadísticas', path: '/estadisticas', icon:'badge'},
     ])
 
 
@@ -62,8 +63,9 @@ export default{
       return $store.getters['api/getUser']
     }) 
 
-    const visibleForUser = (item) => {    
-      if(item.group){
+    const visibleForUser = (item) => {
+      
+      if(userData.value!==null && item.group){
         if(item.group.includes(userData.value.group)){
           return true
         } else {

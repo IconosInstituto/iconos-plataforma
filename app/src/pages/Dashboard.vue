@@ -1,15 +1,18 @@
 <template lang="pug">
 q-page(padding)
   docente(v-if="userData.group == 'docente'")
+  coordinador(v-if="userData.group == 'coordinador'")
 </template>
 
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import docente from 'components/dashboard/docente'
+import coordinador from 'components/dashboard/coordinador'
 export default {
   components:{
-    docente
+    docente,
+    coordinador
   },
   setup () {
     const $store = useStore()

@@ -9,7 +9,7 @@ q-page.flex.flex-center.column
         q-input(label="Usuario / Cuenta" rounded standout dark dense v-model="authuser")
         q-input(label="Contraseña" rounded standout dark dense type="password" v-model="authpass").q-mt-sm
         .text-center.q-mt-lg
-          q-btn(label="Ingresar" color="secondary" rounded unelevated type="submit")
+          q-btn(label="Ingresar" color="primary"  unelevated type="submit")
     q-card-section
       q-separator(spaced)
       //.text-center

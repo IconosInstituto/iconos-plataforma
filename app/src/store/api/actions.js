@@ -40,9 +40,66 @@ export const GetUsers = ({commit}) => {
     })
 }
 
+export const GetUsersByGroup = ({commit}, groupusers) => {
+    return new Promise((resolve, reject) => {
+        api.post('/cockpit/listUsers', {filter:{group:groupusers}}).then(res => {
+            resolve(res.data)
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+export const GetSingleUser = ({commit}, userid) => {
+    return new Promise((resolve, reject) => {
+        api.post('/cockpit/listUsers', {filter:{_id:userid}}).then(res => {
+            resolve(res.data[0])
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+export const GetAllData = ({commit}, collectionname) => {
+    return new Promise((resolve, reject) => {
+        api.post('/collections/get/'+collectionname).then(res => {
+            resolve(res.data.entries)
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+export const GetSingleData = ({commit}, body) => {
+    return new Promise((resolve, reject) => {
+        api.post('/collections/get/'+body.coll, {filter:{user_id:body.id}}).then(res => {
+            resolve(res.data.entries)
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
 export const SaveUser = ({commit}, body) => {
     return new Promise((resolve, reject) => {
         api.post('/cockpit/saveUser', body).then(res => {
+            resolve(res.data)
+        }).catch(error => {
+            reject({error:true, message:'Ocurrió un error.', data: error})
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+export const SaveItem = ({commit}, body) => {
+    return new Promise((resolve, reject) => {
+        const coll =  body.value.coll
+        let newbody = body.value
+        delete newbody.coll
+        if(newbody._id==undefined){
+            delete newbody._id
+        }
+        api.post('/collections/save/'+coll, {data: newbody}).then(res => {
             resolve(res.data)
         }).catch(error => {
             reject({error:true, message:'Ocurrió un error.', data: error})
