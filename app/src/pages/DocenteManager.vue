@@ -9,13 +9,15 @@ q-page(padding)
 
     .row.q-col-gutter-md
       .col-12: q-card.shadow-24: q-card-section
-        q-table.shadow-0(:loading="loading" no-data-label="Sin datos" :rows="items" :columns="columns" dense)
+        q-inner-loading(:showing="loading")
+        q-table.shadow-0(:loading="loading" no-data-label="Sin datos" :rows="estudiantes" :columns="columns" dense v-if="!loading")
             template(v-slot:body="props")
                 q-tr(:props="props")
                     q-td(key="name" :props="props")  {{props.row.name}}
-                    q-td(key="director" :props="props"): q-checkbox
-                    q-td(key="coloquio" :props="props"): q-checkbox
-                    q-td(key="candidatura" :props="props"): q-checkbox
+                    q-td(key="generacion" :props="props")  {{props.row.generacion.name}}
+                    //q-td(key="director" :props="props"): q-checkbox
+                    //q-td(key="lector" :props="props"): q-checkbox
+        p {{estudiantes}}
     //
         .q-mt-xl: q-separator(spaced)
 
@@ -26,7 +28,6 @@ q-page(padding)
             q-card.shadow-24
             q-card-section
                 q-checkbox(:label="'Periodo '+ i" :key="i" left-label v-model="periodos[i]")
-
 </template>
 
 <script>
@@ -34,6 +35,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import editThis from 'components/editThis.vue'
+import _ from 'lodash'
 export default {
     components: {
       editThis
@@ -48,9 +50,10 @@ export default {
     
     const loading = ref(true)
 
-    const items = ref([])
+    const estudiantes = ref([])
     const columns = [
         { name: 'name', label: 'Nombre', field: 'name', align:'left' },
+        { name: 'generacion', label: 'Generación', field: 'generacion', align:'left' },
         { name: 'director', label: 'Director', align:'center' },
         { name: 'coloquio', label: 'Lector Coloquio', align:'center' },
         { name: 'candidatura', label: 'Lector Candidatura', align:'center' },
@@ -62,19 +65,30 @@ export default {
         user.value = res
         // ------ cal
         
-        $store.dispatch('api/GetUsersByGroup', 'estudiante').then(res => {
-          items.value = res
-            loading.value = false
-          // ------ call
-          /*
-          $store.dispatch('api/GetSingleData', {coll: 'tesis', id: $route.params.id}).then(res => {
-            if(res.length){
-              userTesis.value = res
+        $store.dispatch('api/GetUsersByGroup', 'estudiante').then(res2 => {
+          estudiantes.value = []
+          for(var i in res2){
+            if(res2[i].active){
+              estudiantes.value.push(res2[i])
             }
+          }
+          // ------ call
+          $store.dispatch('api/GetAllData', 'estudiantes').then(res3 => {
+              for(var i in estudiantes.value){
+                const mergeUsers = res3.filter(function(value, index, arr){
+                  return value.user_id == estudiantes.value[i]._id
+                })
+                _.merge(estudiantes.value[i], mergeUsers[0])
+              }
+
             loading.value = false
           })
-          */
+
+          
         })
+
+        
+
       })
       
       
@@ -87,8 +101,8 @@ export default {
       userData,
       loadItem,
       loading,
-      items,
-      columns
+      columns,
+      estudiantes,
     }
   },
 

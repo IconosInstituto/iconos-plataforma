@@ -1,8 +1,8 @@
 {
   "name": "iconos-plataforma",
   "version": "0.0.1",
-  "description": "Iconos. Plataforma.",
-  "productName": "Iconos PL",
+  "description": "",
+  "productName": "Doctorado en Humanidades",
   "author": "",
   "private": true,
   "scripts": {
@@ -14,6 +14,7 @@
     "apexcharts": "^3.28.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
     "quasar": "^2.0.0",
     "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.0.1"

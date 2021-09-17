@@ -62,13 +62,40 @@ export const GetSingleUser = ({commit}, userid) => {
 
 export const GetAllData = ({commit}, collectionname) => {
     return new Promise((resolve, reject) => {
-        api.post('/collections/get/'+collectionname).then(res => {
+        api.post('/collections/get/'+collectionname, {populate:-1}).then(res => {
             resolve(res.data.entries)
         })
     }, error => {
         reject({error:true, message:'Ocurrió un error.', data: error})
     })
 }
+export const GetAllDataFiltered = ({commit}, body) => {
+    //body = [collection, filterField, filterValue]
+    let filterVL = {}
+    filterVL[body[1]] = body[2]
+    return new Promise((resolve, reject) => {
+        api.post('/collections/get/'+body[0], {filter:filterVL, populate:-1}).then(res => {
+            resolve(res.data.entries)
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+export const GetAllDataFilteredV2 = ({commit}, body) => {
+    //body = [collection, {"key":"value"}]
+    let filterVL = body[1]
+    return new Promise((resolve, reject) => {
+        api.post('/collections/get/'+body[0], {filter:filterVL, populate:-1}).then(res => {
+            resolve(res.data.entries)
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+
+
 export const GetSingleData = ({commit}, body) => {
     return new Promise((resolve, reject) => {
         api.post('/collections/get/'+body.coll, {filter:{user_id:body.id}}).then(res => {
@@ -84,7 +111,7 @@ export const SaveUser = ({commit}, body) => {
         api.post('/cockpit/saveUser', body).then(res => {
             resolve(res.data)
         }).catch(error => {
-            reject({error:true, message:'Ocurrió un error.', data: error})
+            reject({error:true, message:'Ocurrió un error.', data: error.response.data.error})
         })
     }, error => {
         reject({error:true, message:'Ocurrió un error.', data: error})
@@ -93,13 +120,47 @@ export const SaveUser = ({commit}, body) => {
 
 export const SaveItem = ({commit}, body) => {
     return new Promise((resolve, reject) => {
-        const coll =  body.value.coll
-        let newbody = body.value
+        const coll =  body.coll
+        let newbody = body
         delete newbody.coll
         if(newbody._id==undefined){
             delete newbody._id
         }
         api.post('/collections/save/'+coll, {data: newbody}).then(res => {
+            resolve(res.data)
+        }).catch(error => {
+            reject({error:true, message:'Ocurrió un error.', data: error})
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+export const RemoveItem = ({commit}, body) => {
+    //body = [collection, filterField, filterValue]
+    return new Promise((resolve, reject) => {
+        let filterVL = {}
+        filterVL[body[1]] = body[2]
+        api.post('/collections/remove/'+body[0], {filter:filterVL}).then(res => {
+            resolve(res.data)
+        }).catch(error => {
+            reject({error:true, message:'Ocurrió un error.', data: error})
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+
+
+
+
+
+
+export const NewNotification = ({commit}, body) => {
+    const newbody = {...body, status: 'unread'}
+    return new Promise((resolve, reject) => {
+        api.post('/collections/save/notificaciones', {data: newbody}).then(res => {
             resolve(res.data)
         }).catch(error => {
             reject({error:true, message:'Ocurrió un error.', data: error})

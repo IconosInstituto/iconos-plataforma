@@ -58,6 +58,14 @@ const routes = [
     ],
     meta: { forAuth: true,  group: ['admin', 'coordinador'] }
   },
+  {
+    path: '/generaciones',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Generaciones.vue') },
+    ],
+    meta: { forAuth: true,  group: ['admin', 'coordinador'] }
+  },
 
   // Always leave this as last one,
   // but you can also remove it

@@ -34,7 +34,7 @@ export default {
                 item.value['user_id'] = props.user_id
             }
             item.value[props.field] = thevalue.value
-            $store.dispatch('api/SaveItem', item).then(res => {
+            $store.dispatch('api/SaveItem', item.value).then(res => {
                 context.emit('modified')
                 dialog.value = false
                 item.value = {

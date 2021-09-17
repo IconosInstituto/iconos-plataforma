@@ -47,6 +47,7 @@ export default{
       { label: 'Estudiantes', path: '/estudiantes', icon:'people_alt', group: ['admin', 'coordinador']},
       { label: 'Docentes', path: '/docentes', icon:'contact_page', group: ['admin', 'coordinador']},
       { label: 'Periodos', path: '/periodos', icon:'date_range', group: ['admin', 'coordinador']},
+      { label: 'Generaciones', path: '/generaciones', icon:'group_work', group: ['admin', 'coordinador']},
       //{ label: 'Candidatura', path: '/candidatura', icon:'auto_awesome'},
       //{ label: 'Desempeño', path: '/desempeno', icon:'psychology'},
       //{ label: 'Estadísticas', path: '/estadisticas', icon:'badge'},
