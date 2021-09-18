@@ -30,7 +30,6 @@ div.relative-position
                     span.text-primary.text-bold.q-mx-sm - 
                     | 2021/12/31
             q-card-section: asesores(:asignacion="i" :key="i._id")
-                
 
 </template>
 <script>

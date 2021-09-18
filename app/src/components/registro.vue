@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-    q-btn(size="sm" flat label="Nuevo usuario" padding="0" color="secondary" @click="dialog = true")
+    q-btn(size="sm" flat label="Nuevo usuario" padding="0" color="positive" @click="dialog = true")
     q-dialog(v-model="dialog")
         q-card.bg-dark(style="width: 320px;").shadow-20
             q-card-section(v-if="!success")

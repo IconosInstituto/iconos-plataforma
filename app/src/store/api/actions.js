@@ -169,3 +169,28 @@ export const NewNotification = ({commit}, body) => {
         reject({error:true, message:'Ocurrió un error.', data: error})
     })
 }
+
+
+
+
+
+
+export const GetPeriodo = ({commit}) => {
+    return new Promise((resolve, reject) => {
+        api.get('/singletons/get/periodoactual').then(res => {
+            resolve(res.data)
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+export const SetPeriodo = ({commit}, body) => {
+    return new Promise((resolve, reject) => {
+        api.post('/singletons/save/periodoactual', {data:{periodo:body}}).then(res => {
+            resolve(res.data)
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}

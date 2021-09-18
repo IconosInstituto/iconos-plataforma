@@ -6,20 +6,20 @@ div
     q-list(separator)
         q-item(v-for="(i, index) in directores" v-if="docentes.length" dense)
             q-item-section.text-bold {{docenteName(i.docente)[0].name}}
-            q-item-section(side): q-btn(icon="delete" @click="deleteItem(i)" size="xs" padding="4px" color="negative"): q-tooltip Eliminar
+            q-item-section(side  v-if="readonly==undefined"): q-btn(icon="delete" @click="deleteItem(i)" size="xs" padding="4px" color="negative"): q-tooltip Eliminar
 
     
     
-    .text-center: q-btn(icon="add" label="Asignar director" color="info" unelevated no-caps @click="openDialog('director')" v-if="directores.length==0").q-my-md
+    .text-center: q-btn(icon="add" label="Asignar director" color="info" unelevated no-caps @click="openDialog('director')" v-if="directores.length==0 && readonly==undefined").q-my-md
 
     q-separator(spaced).q-my-md
     .text-body1.text-center.text-negative LECTORES
     q-list(separator)
         q-item(v-for="(i, index) in lectores" v-if="docentes.length" dense)
             q-item-section {{docenteName(i.docente)[0].name}}
-            q-item-section(side): q-btn(icon="delete" @click="deleteItem(i)" size="xs" padding="4px" color="negative"): q-tooltip Eliminar
+            q-item-section(side v-if="readonly==undefined"): q-btn(icon="delete" @click="deleteItem(i)" size="xs" padding="4px" color="negative"): q-tooltip Eliminar
 
-    .text-center: q-btn(icon="add" label="Asignar lector" color="secondary" unelevated no-caps @click="openDialog('lector')").q-my-md
+    .text-center: q-btn(icon="add" label="Asignar lector" color="secondary" unelevated no-caps @click="openDialog('lector')"  v-if="readonly==undefined").q-my-md
 
     q-dialog(v-model="dialog")
         q-card.shadow-24.bg-dark.full-width
@@ -41,7 +41,7 @@ import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 
 export default {
-    props: ['asignacion'],
+    props: ['asignacion', 'readonly'],
     setup (props) {
         const $q = useQuasar()
         const $store = useStore()

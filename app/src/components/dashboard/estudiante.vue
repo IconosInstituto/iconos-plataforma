@@ -1,104 +1,94 @@
 <template lang="pug">
-.row.q-col-gutter-md
+.row.q-col-gutter-md(v-if="userData")
     .col-12: q-card.shadow-24
-          q-card-section(v-for="(i, index) in userTesis").text-center
-            .text-grey Título de Investigación
-            div.text-h6.text-bold.text-primary {{i.titulo || '- -'}}
-              //editThis(v-if="!loading" :value="i.titulo" field="titulo" label="Título de tésis" coll="tesis" :user_id="user._id" :id="i._id"  @modified="loadItem" key="tituloTesis")
-    .col-12
-        q-card.bg-white.shadow-24
-            q-card-section
-                .text-h6.text-primary Análisis
-                q-badge(label="Excelente" color="positive" floating)
-                p {{item.analisis}}
-    .col-12
-        q-card.bg-white.shadow-24
-            q-card-section
-                .text-h6.text-primary Estructura
-                q-badge(label="Bueno" color="primary" floating)
-                p {{item.estructura}}
-    .col-12
-        q-card.bg-white.shadow-24
-            q-card-section
-                .text-h6.text-primary Redacción
-                q-badge(label="Suficiente" color="accent" floating)
-                p {{item.redaccion}}
-    .col-12
-        q-card.bg-white.shadow-24
-            q-card-section
-                .text-h6.text-primary Argumentación
-                q-badge(label="No satisfactorio" color="negative" floating)
-                p {{item.argumentacion}}
-    
-    
-    .col-12
-        q-card.bg-white.shadow-24
-            q-card-section
-                .text-h6.text-primary.q-mb-md ¿Cómo considera que ha sido el desempeño del estudiante?
-                .text-body1.flex.justify-center: div.bg-accent.text-white.rounded-borders.q-px-sm Suficiente
-    .col-6
-        q-card.bg-white.shadow-24
-            q-card-section
-                .text-h6.text-primary.q-mb-md Fortalezas
-    .col-6
-        q-card.bg-white.shadow-24
-            q-card-section
-                .text-h6.text-primary.q-mb-md Debilidades
-           
-    .col-12
-        q-card.bg-white.shadow-24
-            q-card-section
-              .text-h6.text-primary.q-mb-md ¿Cuál es el porcentaje de avance de la investigación del estudiante?
-              .row.items-center.justify-center
-                .col-sm-6.co
-                  apexchart(width="100%" type="radialBar" :options="options" :series="[item.porcentaje]")
-                .col-sm-6
-                  //q-input(v-model="item.porcentaje" standout="bg-primary text-white"  label="Porcentaje" )
-                    template(v-slot:append): .text-bold.text-h6 %
-                  q-card.bg-dark.q-mt-md
-                    q-card-section
-                      q-input(v-model="item.calificacion" standout dark  label="Calificación" readonly)
-                        template(v-slot:prepend): q-icon(name="sports_score")
+          q-card-section
+            q-input(v-model="userData.tituloInvestigacion" standout="bg-primary text-white" label="Título de Investigación" type="textarea")
+                template(v-slot:append)
+                    q-btn(icon="save" size="sm" color="primary" unelevated @click="saveThis(userData.tituloInvestigacion, 'tituloInvestigacion')"): q-tooltip Guardar título
+    .col-sm-4: q-card.shadow-24: q-card-section
+        q-input(readonly label="Generación" v-model="userData.generacion.name")
+    .col-sm-4: q-card.shadow-24: q-card-section
+        q-input(readonly label="Beca" v-model="userData.beca")
+    .col-sm-4: q-card.shadow-24: q-card-section
+        q-input(readonly label="Estado" v-model="userData.status")
 
 
+.q-mt-xl: q-separator(spaced).q-my-md
+.text-h6.text-dark.q-my-md Periodos
+.row.q-col-gutter-md.relative-position
+    .col-12.col-sm-4(v-for="(i, index) in asignaciones"): q-card.shadow-24
+        q-card-section.text-center
+            .text-h6 {{i.periodo.name}}
+            div.text-caption.text-grey
+                | 2021/11/01
+                span.text-primary.text-bold.q-mx-sm - 
+                | 2021/12/31
+        q-card-section: asesores(:asignacion="i" :key="i._id" readonly)
+    q-inner-loading(:showing="loading")
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useQuasar } from 'quasar'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import editThis from 'components/editThis.vue'
+import asesores from 'components/UserManager/estudianteAsesores.vue'
 export default {
     components: {
-      editThis
+        asesores
     },
     setup (){
+        const $q = useQuasar()
         const $router = useRouter()
-        const loading = ref(false)
+        const $store = useStore()
         
-        const userTesis = ref([{titulo:'La complejidad y el análisis del discurso'}])
-
-        const openit = (itemid) => {
-            $router.push('/desempeno/'+itemid)
-        }
-        const item = ref({
-            analisisValue: 0,
-            estructuraValue: 0,
-            redaccionValue: 0,
-            argumentacionValue: 0,
-            analisis: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a pulvinar dui. Maecenas tempus turpis tincidunt, dictum magna vel, euismod orci. Nunc vitae ipsum ac erat lobortis iaculis. Quisque metus odio, consectetur quis tempor ut, auctor finibus nisi. Sed eget tempus augue. Vestibulum et venenatis tortor.',
-            estructura: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a pulvinar dui.',
-            redaccion: 'Maecenas a pulvinar dui. Maecenas tempus turpis tincidunt, dictum magna vel, euismod orci. Nunc vitae ipsum ac erat lobortis iaculis. Quisque metus odio, consectetur quis tempor ut, auctor finibus nisi. Sed eget tempus augue.',
-            argumentacion: 'Quisque metus odio, consectetur quis tempor ut, auctor finibus nisi. Sed eget tempus augue.',
-            desempeno: 'o1',
-            fortalezas: null,
-            debilidades: null,
-            porcentaje: 50,
-            calificacion: 8
+        const loading = ref(false)
+        const asignaciones = ref(null)
+        
+        const user = computed (() => {
+            return $store.getters['api/getUser']
         })
+        const userData = ref(null)
+
+        
+
+
+        const saveThis = (value, field) => {
+            if(!value){
+                $q.notify('Verifica el contenido')
+                return false
+            }
+            let reqItem = {_id: userData.value._id, coll:'estudiantes'}
+            reqItem[field] = value
+
+            $store.dispatch('api/SaveItem', reqItem).then(res => {
+                $q.notify('Guardado')
+            })
+        }
+
+
+        const loadAsignaciones = () => {
+            $store.dispatch('api/GetAllDataFiltered', ['asignaciones', 'user_id', user.value.id]).then(res => {
+                asignaciones.value = res
+                loading.value = false
+            })
+        }
+        const loadUserData = () => {
+            $store.dispatch('api/GetSingleData',  {coll: 'estudiantes', id: user.value.id}).then(res => {
+                userData.value = res[0]
+                loadAsignaciones()
+            })
+        }
+        loadUserData()
+        
+
+
         return{
-            userTesis,
-            item,
-            options: { labels: ['Avance'] }
+            user,
+            userData,
+            saveThis,
+            asignaciones,
+            loading
         }
     }
 }

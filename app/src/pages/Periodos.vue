@@ -21,8 +21,10 @@ q-page(padding)
   
   q-separator(spaced)
   
-  
-  
+  //q-card.shadow-24.bg-info.full-width.q-my-md: q-card-section: q-form(@submit.prevent="submitNew").row.q-col-gutter-md.items-center
+    .col: q-select(v-model="periodoActual" label="Periodo actual" standout="bg-primary text-white" dense dark required :options="items" option-label="name" map-options)
+    .col.text-right: q-btn(label="Establecer periodo actual"  color="primary" unelevated no-caps @click="SetPeriodo")
+
 </template>
 
 <script>
@@ -42,6 +44,8 @@ export default {
 
     
     
+    const periodoActual = ref(null)
+
     const loading = ref(true)
 
     const items = ref([])
@@ -92,6 +96,20 @@ export default {
 
     loadItem()
    
+
+    const GetPeriodo = () => {
+      $store.dispatch('api/GetPeriodo').then(res => {
+        periodoActual.value = res.periodo
+      })
+    }
+    const SetPeriodo = () => {
+      $store.dispatch('api/SetPeriodo', 'hola').then(res => {
+        console.log(res)
+        //periodoActual.value = res.periodo
+      })
+    }
+    //GetPeriodo()
+
     return {
       loadItem,
       loading,
@@ -99,7 +117,9 @@ export default {
       columns,
       newItem,
       submitNew,
-      deleteItem
+      deleteItem,
+      periodoActual,
+      SetPeriodo
     }
   },
 

@@ -5,7 +5,7 @@ div
             .row.q-col-gutter-md
                 .col-sm-6.col-12: usuariosactivos(usergroup="estudiante")
                 .col-sm-6.col-12: usuariosactivos(usergroup="docente")
-                .col-12: q-card.shadow-24
+                //.col-12: q-card.shadow-24
                     q-card-section.text-center
                         q-icon(name="date_range" color="secondary" size="md")
                         .text-body2.text-dark Periodo activo

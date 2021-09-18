@@ -12,14 +12,14 @@ q-layout(view="lhr LpR fFf")
     .q-pa-sm.full-height
       section.full-height.rounded-borders.shadow-24.text-white.text-bold.drawerContainer
         .q-px-sm.q-py-lg.text-center
-          //img(alt="Iconos PL" src="~assets/iconos.png" style="height: 24px; vertical-align:middle;")
           q-img(src="~/assets/logodh.png")
         q-list(separator).q-pa-sm
           template( v-for="(i, index) in menuItems" )
             q-item(clickable :to="i.path" active-class="text-accent" v-if="visibleForUser(i)").rounded-borders
               q-item-section(avatar): q-icon(:name="i.icon")
               q-item-section: q-item-label {{i.label}}
-
+        
+          estudianteMenu(:userdata="userData" v-if="userData")
 
         footer.flex.column.q-pa-sm.text-center.items-center
           q-btn(label="Cerrar sesión" color="white" text-color="dark" size="sm" no-caps @click="logoutFN")
@@ -32,16 +32,17 @@ q-layout(view="lhr LpR fFf")
 import {ref, computed} from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import estudianteMenu from 'components/estudianteMenu'
 export default{
   components: {
-
+    estudianteMenu
   },
   setup () {
     const $store = useStore()
     const $router = useRouter()
 
     const menuItems = ref([
-      { label: 'Investigación', path: '/dashboard', icon:'description', group: ['estudiante']},
+      { label: 'Inicio', path: '/dashboard', icon:'notes', group: ['estudiante']},
       { label: 'Investigaciones', path: '/dashboard', icon:'description', group: ['docente']},
       { label: 'Panel', path: '/dashboard', icon:'insights', group: ['admin', 'coordinador']},
       { label: 'Estudiantes', path: '/estudiantes', icon:'people_alt', group: ['admin', 'coordinador']},
@@ -79,6 +80,14 @@ export default{
         return true
       }
     }
+
+
+    const GetPeriodo = () => {
+      $store.dispatch('api/GetPeriodo').then(res => {
+
+      })
+    }
+    //GetPeriodo()
 
 
     return {

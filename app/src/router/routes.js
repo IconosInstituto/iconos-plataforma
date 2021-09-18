@@ -59,6 +59,22 @@ const routes = [
     meta: { forAuth: true,  group: ['admin', 'coordinador'] }
   },
   {
+    path: '/periodo',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '/periodo/:id', component: () => import('pages/estudiantePeriodoDesempeno.vue') },
+    ],
+    meta: { forAuth: true,  group: ['estudiante'] }
+  },
+  {
+    path: '/periodos',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Periodos.vue') },
+    ],
+    meta: { forAuth: true,  group: ['admin', 'coordinador'] }
+  },
+  {
     path: '/generaciones',
     component: () => import('layouts/MainLayout.vue'),
     children: [

@@ -28,31 +28,7 @@ q-page(padding)
     
     periodos(:estudianteid="user._id" v-if="user && userData")
         
-   
     //
-      .text-h6.text-dark.q-my-md Asignaciones
-
-      .row.q-col-gutter-md
-        .col-12
-          q-card.shadow-24
-            q-card-section: div
-              span.text-grey Director: 
-              span.text-bold.text-primary D. Pérez González Joquín Dal.
-
-
-
-      .q-mt-xl: q-separator(spaced)
-
-      .text-h6.text-dark.q-my-md Periodos
-      
-      .row.q-col-gutter-md
-        .col-6.col-sm-3(v-for="(i, index) in 12")
-          q-card.shadow-24
-            q-card-section
-              q-checkbox(:label="'Periodo '+ i" :key="i" left-label v-model="periodos[i]")
-      
-      
-      
       .q-mt-xl: q-separator(spaced)
 
       .text-h6.text-dark.q-my-md Coloquios / Candidaturas
@@ -60,7 +36,7 @@ q-page(padding)
       .row.q-col-gutter-md
         .col-12
             q-card.shadow-24
-              q-card-section
+              q-card-sectionç
                 .row.full-width.items-center
                   .col-6: q-checkbox(label="1er Coloquio" v-model="coloquios[0]")
                   .col-6: q-input(label="Fecha" type="date" stack-label rounded standout="bg-primary text-white")
