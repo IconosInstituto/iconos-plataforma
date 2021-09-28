@@ -13,7 +13,7 @@ q-page(padding)
         q-table.shadow-0(:loading="loading" no-data-label="Sin datos" :rows="estudiantes" :columns="columns" dense v-if="!loading")
             template(v-slot:body="props")
                 q-tr(:props="props")
-                    q-td(key="name" :props="props")  {{props.row.name}} {{props.row.user_id}}
+                    q-td(key="name" :props="props")  {{props.row.name}}
                     q-td(key="generacion" :props="props")  {{props.row.generacion.name}}
                     q-td(key="periodos" :props="props"): q-btn(label="Periodos" color="primary" @click="openPeriodos(props.row)" size="sm")
     q-dialog(v-model="dialog")

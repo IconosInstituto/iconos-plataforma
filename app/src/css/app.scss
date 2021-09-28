@@ -3,3 +3,12 @@
 .q-textarea .q-field__native{
     height: 80px
 }
+
+@media (prefers-color-scheme: dark) {
+    .q-page {
+        background-color: $dark;
+        &>.text-dark, .text-dark.prefers-color{
+            color:#fff !important;
+        }
+    }
+}

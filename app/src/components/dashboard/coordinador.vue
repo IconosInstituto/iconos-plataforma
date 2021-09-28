@@ -19,23 +19,9 @@ div
 
     q-separator(spaced)
     
-    .row.q-col-gutter-md
-        .col-3: q-card.shadow-24
-            q-card-section.text-center
-                .text-body2.text-dark Análisis
-                apexchart(width="100%" type="pie" :options="options" :series="series")
-        .col-3: q-card.shadow-24
-            q-card-section.text-center
-                .text-body2.text-dark Estructura
-                apexchart(width="100%" type="pie" :options="options" :series="series")
-        .col-3: q-card.shadow-24
-            q-card-section.text-center
-                .text-body2.text-dark Redacción
-                apexchart(width="100%" type="pie" :options="options" :series="series")
-        .col-3: q-card.shadow-24
-            q-card-section.text-center
-                .text-body2.text-dark Argumentación
-                apexchart(width="100%" type="pie" :options="options" :series="series")
+    estadisticasCalificadores
+    
+    
        
 </template>
 
@@ -44,18 +30,16 @@ div
 
 import usuariosactivos from 'components/dashboard/coordinador/usuariosactivos'
 import notificaciones from 'components/dashboard/coordinador/notificaciones'
+import estadisticasCalificadores from 'components/dashboard/coordinador/estadisticasCalificadores'
 export default {
     components: {
         usuariosactivos,
-        notificaciones
+        notificaciones,
+        estadisticasCalificadores
     },
     setup () {
         return {
-            series: [5, 4, 2, 1],
-            options: { 
-                labels: ['Excelente', 'Bueno', 'Satisfactorio', 'No satisfactorio'],
-                legend:{ show: false }
-            }
+
         }
     }
 }

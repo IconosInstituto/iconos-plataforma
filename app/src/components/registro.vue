@@ -45,7 +45,7 @@ export default {
             $store.dispatch('api/SaveUser', {user: newuser.value}).then(res => {
                 $q.notify('Registro exitoso.')
                 success.value = true
-                $store.dispatch('api/NewNotification', {description: 'Registro: '+newuser.value.user, sendto:'/estudiantes'})
+                $store.dispatch('api/NewNotification', {description: 'Registro: '+newuser.value.user, sendto:'/'+newuser.value.group+'s'})
             }).catch(error => {
                 $q.notify(error.message)
                 switch(error.data){

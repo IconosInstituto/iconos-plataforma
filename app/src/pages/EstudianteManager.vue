@@ -21,12 +21,12 @@ q-page(padding)
       .col-12: q-card.shadow-24
           q-card-section.text-center
             .text-grey Título de Investigación
-            div.text-h6.text-bold.text-primary {{userData.titulo || '- -'}}
+            div.text-h6.text-bold.text-primary {{userData.tituloInvestigacion || '- -'}}
               //editThis(v-if="!loading" :value="userData.titulo" field="titulo" label="Título de tésis" coll="tesis" :user_id="user._id" :id="i._id"  @modified="loadItem" key="tituloTesis")
         
     .q-mt-xl: q-separator(spaced)
     
-    periodos(:estudianteid="user._id" v-if="user && userData")
+    periodos(:estudiantedata="userData" v-if="user && userData")
         
     //
       .q-mt-xl: q-separator(spaced)

@@ -97,8 +97,9 @@ export const GetAllDataFilteredV2 = ({commit}, body) => {
 
 
 export const GetSingleData = ({commit}, body) => {
+    //body = {coll, filter}
     return new Promise((resolve, reject) => {
-        api.post('/collections/get/'+body.coll, {filter:{user_id:body.id}}).then(res => {
+        api.post('/collections/get/'+body.coll, {filter:{user_id:body.id}, populate:-1}).then(res => {
             resolve(res.data.entries)
         })
     }, error => {
@@ -192,5 +193,22 @@ export const SetPeriodo = ({commit}, body) => {
         })
     }, error => {
         reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+
+export const ImageB64 = ({commit}, imagepath) => {
+    const req = {
+        src: imagepath.path,
+        b64: true,
+        w: 300,
+        m: 'fitToWidth'
+
+    }
+    return new Promise((resolve, reject) => {
+        api.post('/cockpit/image', req).then(res => {
+            resolve(res.data)
+        }, error => {
+            reject({error:true, message:'Ocurrió un error.', data: error})
+        })
     })
 }

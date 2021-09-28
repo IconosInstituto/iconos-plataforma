@@ -82,6 +82,22 @@ const routes = [
     ],
     meta: { forAuth: true,  group: ['admin', 'coordinador'] }
   },
+  {
+    path: '/reportesconacyt',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/ReportesConacyt.vue') },
+    ],
+    meta: { forAuth: true,  group: ['admin', 'coordinador'] }
+  },
+  {
+    path: '/mi-cuenta',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/MiCuenta.vue') },
+    ],
+    meta: { forAuth: true,  group: ['admin', 'coordinador', 'docente'] }
+  },
 
   // Always leave this as last one,
   // but you can also remove it

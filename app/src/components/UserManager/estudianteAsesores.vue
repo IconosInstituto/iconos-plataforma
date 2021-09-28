@@ -4,7 +4,7 @@ div
     .text-body1.text-center.text-info DIRECTOR
 
     q-list(separator)
-        q-item(v-for="(i, index) in directores" v-if="docentes.length" dense)
+        q-item(v-for="(i, index) in directores" v-if="docentes.length" dense).text-center
             q-item-section.text-bold {{docenteName(i.docente)[0].name}}
             q-item-section(side  v-if="readonly==undefined"): q-btn(icon="delete" @click="deleteItem(i)" size="xs" padding="4px" color="negative"): q-tooltip Eliminar
 
@@ -14,7 +14,7 @@ div
 
     q-separator(spaced).q-my-md
     .text-body1.text-center.text-negative LECTORES
-    q-list(separator)
+    q-list(separator v-if="readonly!=undefined && lectores.length>0").text-center
         q-item(v-for="(i, index) in lectores" v-if="docentes.length" dense)
             q-item-section {{docenteName(i.docente)[0].name}}
             q-item-section(side v-if="readonly==undefined"): q-btn(icon="delete" @click="deleteItem(i)" size="xs" padding="4px" color="negative"): q-tooltip Eliminar
@@ -83,7 +83,7 @@ export default {
                 docente: nuevoItem.value._id,
                 tipo: nuevoTipo.value,
                 asignacion: props.asignacion,
-                coll: 'asignacionesMiembros'
+                coll: 'asesores'
             }
             $store.dispatch('api/SaveItem', reqItem).then(res => {
                 $q.notify('Docente asignado')
@@ -101,7 +101,7 @@ export default {
 
         const loadAsignados = () => {
             const filtering = { "asignacion._id": props.asignacion._id }
-            $store.dispatch('api/GetAllDataFilteredV2', ['asignacionesMiembros', filtering]).then(res => {
+            $store.dispatch('api/GetAllDataFilteredV2', ['asesores', filtering]).then(res => {
                 directores.value = []
                 lectores.value = []
                 for(var i in res){
@@ -119,7 +119,7 @@ export default {
 
 
         const deleteItem = (item) => {
-            $store.dispatch('api/RemoveItem', ['asignacionesMiembros', '_id', item._id]).then(res => {
+            $store.dispatch('api/RemoveItem', ['asesores', '_id', item._id]).then(res => {
                 loadAsignados()
             })
         }

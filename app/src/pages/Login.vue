@@ -6,8 +6,8 @@ q-page.flex.flex-center.column
       q-img(src="~/assets/logodh.png")
     q-card-section
       q-form(@submit.prevent="loginFn")
-        q-input(label="Nº de cuenta / Usuario"  standout dark dense v-model="authuser")
-        q-input(label="Contraseña"  standout dark dense type="password" v-model="authpass").q-mt-sm
+        q-input(label="Nº de cuenta / Usuario"  standout dark dense v-model="authuser" autocomplete="username")
+        q-input(label="Contraseña"  standout dark dense type="password" v-model="authpass" autocomplete="current-password").q-mt-sm
         .text-center.q-mt-lg
           q-btn(label="Ingresar" color="primary"  unelevated type="submit")
     q-card-section

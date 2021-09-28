@@ -1,5 +1,5 @@
 <template lang="pug">
-q-page(padding)
+q-page(padding v-if="userData")
   estudiante(v-if="userData.group == 'estudiante'")
   docente(v-if="userData.group == 'docente'")
   coordinador(v-if="userData.group == 'coordinador'")

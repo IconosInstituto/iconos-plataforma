@@ -3,7 +3,7 @@ q-layout(view="lhr LpR fFf")
   q-header().bg-transparent
     .q-pa-sm
       q-toolbar().text-dark.bg-white.rounded-borders
-        q-btn(:icon="leftDrawerOpen ? 'chevron_left' : 'chevron_right'" @click="toggleLeftDrawer" flat).q-px-xs
+        q-btn(:icon="leftDrawerOpen ? 'menu' : 'menu_open'" @click="toggleLeftDrawer" flat).q-px-xs
         q-toolbar-title.text-body1 Bienvenido, #[strong {{userData ? userData.name : ''}}].
         div.text-right.text-caption 
           div.text-caption.text-dark {{userData ? userData.user: ''}}
@@ -49,6 +49,8 @@ export default{
       { label: 'Docentes', path: '/docentes', icon:'contact_page', group: ['admin', 'coordinador']},
       { label: 'Periodos', path: '/periodos', icon:'date_range', group: ['admin', 'coordinador']},
       { label: 'Generaciones', path: '/generaciones', icon:'group_work', group: ['admin', 'coordinador']},
+      { label: 'Reportes', path: '/reportesconacyt', icon:'summarize', group: ['admin', 'coordinador']},
+      { label: ' Mi cuenta', path: '/mi-cuenta', icon:'auto_awesome', group: ['admin', 'coordinador', 'docente']},
       //{ label: 'Candidatura', path: '/candidatura', icon:'auto_awesome'},
       //{ label: 'Desempeño', path: '/desempeno', icon:'psychology'},
       //{ label: 'Estadísticas', path: '/estadisticas', icon:'badge'},

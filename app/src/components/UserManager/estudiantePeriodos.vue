@@ -38,7 +38,7 @@ import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 import asesores from 'components/UserManager/estudianteAsesores'
 export default {
-    props: ['estudianteid'],
+    props: ['estudiantedata'],
     components: {asesores},
     setup (props) {
         const $q = useQuasar()
@@ -55,7 +55,7 @@ export default {
             dialog.value = false
             for(var i in asignadosNuevos.value){
                 const asignItem = {
-                    user_id: props.estudianteid,
+                    estudiante: props.estudiantedata,
                     periodo: asignadosNuevos.value[i],
                     coll: 'asignaciones'
                 }

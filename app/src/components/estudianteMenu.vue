@@ -19,12 +19,14 @@ export default {
         const periodos = ref([])
 
         const loadItems = () => {
-            const filters = {user_id: props.userdata.id}
+            const filters = {estudiante: props.userdata.id}
             $store.dispatch('api/GetAllDataFilteredV2', ['asignaciones', filters]).then(res => {
                 menuItems.value = res
             })
         }
-        loadItems()
+        if(props.userdata.group=='estudiante'){
+            loadItems()
+        }
 
         return {
             menuItems
