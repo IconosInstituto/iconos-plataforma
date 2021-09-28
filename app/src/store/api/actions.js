@@ -178,19 +178,45 @@ export const NewNotification = ({commit}, body) => {
 
 export const GetPeriodo = ({commit}) => {
     return new Promise((resolve, reject) => {
-        api.get('/singletons/get/periodoactual').then(res => {
-            resolve(res.data)
+        api.post('/collections/get/periodos', {filter:{actual: true}}).then(res => {
+            resolve(res.data.entries[0])
+            commit('SET_PERIODO', res.data.entries[0])
         })
     }, error => {
         reject({error:true, message:'Ocurrió un error.', data: error})
     })
 }
 
-export const SetPeriodo = ({commit}, body) => {
+export const SetPeriodo = ({commit}, periodo) => {
     return new Promise((resolve, reject) => {
-        api.post('/singletons/save/periodoactual', {data:{periodo:body}}).then(res => {
-            resolve(res.data)
+        //Find active and remove state
+        api.post('/collections/get/periodos', {filter:{actual: true}}).then(res => {
+            var reqPrev = {
+                _id: res.data.entries[0]._id,
+                actual: false
+            }
+            api.post('/collections/save/periodos', {data:reqPrev})
+        
+        
+            // Set new to state active
+            var reqNext = {
+                _id: periodo._id,
+                actual: true
+            }
+            api.post('/collections/save/periodos', {data:reqNext}).then(res => {
+                resolve(res.data)
+                commit('SET_PERIODO', item)
+            }).catch(error => {
+                reject({error:true, message:'Ocurrió un error.', data: error})
+            })
+        
+        
         })
+        
+
+        
+
+
     }, error => {
         reject({error:true, message:'Ocurrió un error.', data: error})
     })

@@ -10,8 +10,8 @@ q-page(padding)
       template(v-slot:body="props")
           q-tr(:props="props")
               q-td(key="name" :props="props").text-bold {{props.row.name}}
-              q-td(key="startDate" :props="props")  {{props.row.startDate}}
-              q-td(key="endDate" :props="props")  {{props.row.endDate}}
+
+              q-td(key="add" :props="props"): addStudent(:generacion="props.row")
               q-td(key="actions" :props="props")
                 q-btn(icon="delete" @click="deleteItem(props.row)" size="xs" padding="4px" color="negative"): q-tooltip Eliminar
 
@@ -29,9 +29,10 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import editThis from 'components/editThis.vue'
 import { date, useQuasar } from 'quasar'
+import addStudent from 'components/generaciones/addStudent'
 export default {
     components: {
-      editThis
+      addStudent
     },
   setup () {
     const $q = useQuasar()
@@ -45,6 +46,7 @@ export default {
     const items = ref([])
     const columns = [
         { name: 'name', label: 'Nombre', field: 'name', align:'left' },
+        { name: 'add', label: 'Añadir estudiantes', field: 'add' },
         { name: 'actions' }
     ]
 

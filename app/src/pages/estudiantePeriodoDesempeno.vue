@@ -1,9 +1,10 @@
 <template lang="pug">
 q-page(padding)
+    div(v-if="activeItem && activeItem.firmaconacyt && activeItem.firmaCoordinador").text-center.q-my-lg: conacytPrint(:asignacion="activeItem")
+
     desempeno(:item="activeItem" v-if="activeItem")
-    .row.q-col-gutter-md(v-if="activeItem").q-mt-md
-        .col-12.text-center
-            conacytPrint(:user="user" :userData="userData" :asignacion="activeItem")
+    
+
 </template>
 <script>
 import {ref, computed} from 'vue'

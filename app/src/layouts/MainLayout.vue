@@ -11,8 +11,13 @@ q-layout(view="lhr LpR fFf")
   q-drawer(v-model="leftDrawerOpen" :breakpoint="820")
     .q-pa-sm.full-height
       section.full-height.rounded-borders.shadow-24.text-white.text-bold.drawerContainer
-        .q-px-sm.q-py-lg.text-center
+        .q-px-sm.q-py-sm.text-center
           q-img(src="~/assets/logodh.png")
+        
+          //Periodo actual
+          currentP
+        
+        
         q-list(separator).q-pa-sm
           template( v-for="(i, index) in menuItems" )
             q-item(clickable :to="i.path" active-class="text-accent" v-if="visibleForUser(i)").rounded-borders
@@ -33,9 +38,11 @@ import {ref, computed} from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import estudianteMenu from 'components/estudianteMenu'
+import currentP from 'components/currentPeriodo'
 export default{
   components: {
-    estudianteMenu
+    estudianteMenu,
+    currentP
   },
   setup () {
     const $store = useStore()

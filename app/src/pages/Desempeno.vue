@@ -1,5 +1,8 @@
 <template lang="pug">
 q-page(padding)
+  
+  div.text-center.q-my-lg(v-if="estudiante"): conacytPrint(:asignacion="asesor")
+  
   q-form(v-if="estudiante && estudianteUser" @submit.prevent="saveAsesor")
     .row.q-col-gutter-md
       .col-12
@@ -117,9 +120,11 @@ import { useRouter, useRoute } from 'vue-router'
 import _ from 'lodash'
 
 import lectores from 'components/desempeno/lectores'
+import conacytPrint from 'components/desempeno/conacytPrint'
 export default {
   components:{
-    lectores
+    lectores,
+    conacytPrint
   },
   setup () {
     const $q = useQuasar()

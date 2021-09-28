@@ -1,6 +1,12 @@
 <template lang="pug">
 div
-    .row.q-col-gutter-md()
+    
+    .row.q-col-gutter-md
+        .col-12
+            q-card.bg-white.shadow-24
+                q-card-section.text-center
+                    .text-body2.text-primary Director
+                    .text-body1 {{docente.name}}
         .col-12
             q-card.bg-white.shadow-24
                 q-card-section
@@ -84,13 +90,13 @@ div
                             q-img(style="width: 100%; max-width: 200px" :src="docente.firma")
                             p {{docente.name}}
                     
-                    
+    
 
 
 </template>
 <script>
 import {ref, computed} from 'vue'
-import { useQuasar } from 'quasar'
+import { QSpinnerClock, useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 export default {
@@ -118,9 +124,9 @@ export default {
                 docente.value.firma = resdocente[0].firma
             })
         }
-        if(props.conacyt!=undefined){
-            getDocente()
-        }
+
+        getDocente()
+
 
 
         let calificadores = []

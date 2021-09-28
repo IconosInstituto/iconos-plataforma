@@ -8,3 +8,10 @@ export const UNSET_USER =(state) => {
     localStorage.removeItem('iconosPL_user')
     state.user = null
 }
+
+export const SET_PERIODO =(state, data) => {
+    state.periodo = data
+}
+
+
+

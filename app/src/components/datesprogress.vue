@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-    q-linear-progress(:value="percentage" color="primary")
+    q-linear-progress(:value="percentage" color="positive")
 </template>
 <script>
 import {ref} from 'vue'

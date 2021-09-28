@@ -14,7 +14,7 @@ div
                 q-td(key="tipo" :props="props" :class="props.row.tipo=='director'?'text-primary':'text-secondary'").text-capitalize.text-bold {{props.row.tipo}}
                 q-td(key="calificacion" :props="props") {{props.row.calificacion}}
                 q-td(key="firmaconacyt" :props="props") {{props.row.firmaconacyt ? 'Firmado' : '-'}}
-
+                q-td(key="firmaCoordinador" :props="props") {{props.row.firmaCoordinador ? 'Firmado' : '-'}}
     //div(v-for="(i, index) in asignaciones")
         p {{i.asignacion}}
         //p {{estudiantes}}
@@ -85,6 +85,8 @@ export default {
                 { name: 'tipo', label: 'Tipo', field: 'tipo', align:'left' },
                 { name: 'calificacion', label: 'Calificacion', field: 'calificacion', align:'center' },
                 { name: 'firmaconacyt', label: 'CONACYT', field: 'firmaconacyt', align:'center' },
+                { name: 'firmaCoordinador', label: 'Firma de coordinador', field: 'firmaCoordinador', align:'center' },
+
             ],
             loading,
             openit,

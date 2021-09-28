@@ -21,15 +21,14 @@ q-page(padding)
                             q-card-section.text-center
                                 .text-grey Lector
                                 div.text-body1.text-bold.text-secondary {{activeItem.docenteName}}
+                    div.text-center.q-my-lg(v-if="activeItem"): conacytPrint(:asignacion="activeItem")
                     desempeno(:item="activeItem" conacyt=true)
                 q-card-section.text-center(v-if="!activeItem.firmaCoordinador")
                     q-btn(label="Aprobar y firmar reporte " no-caps color="primary" @click="signReport")
                 q-card-section.text-center(v-else)
                     .text-h6.text-primary.q-mb-md Firmado por coordinador
-                    //.text-h6.text-primary.q-mb-md Firma de coordinador
-                        .text-center
-                            q-img(style="width: 100%; max-width: 200px" :src="docente.firma")
-                            p {{docente.name}}
+                    .text-center
+                        q-img(style="width: 100%; max-width: 200px" :src="firmaCoordinador")
 
 </template>
 <script>
@@ -38,10 +37,12 @@ import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import desempeno from 'components/desempeno/desempenoViewOnly'
+import conacytPrint from 'components/desempeno/conacytPrint'
 import _ from 'lodash'
 export default {
     components: {
-        desempeno
+        desempeno,
+        conacytPrint
     },
     setup(){
         const $q = useQuasar()
@@ -56,11 +57,18 @@ export default {
         const findUserData = (id) => {
             return _.find(estudiantes.value, {_id:id});
         }
+        const firmaCoordinador = ref(null)
         const loadItems = () => {
             var filterreq = {
                 tipo: 'director',
                 firmaconacyt: true,
             }
+
+            
+            $store.dispatch('api/GetAllData', 'coordinadors').then(res => {
+                firmaCoordinador.value = res[0].firma
+            })
+
             $store.dispatch('api/GetAllDataFilteredV2', ['asesores', filterreq]).then(res => {
                 reportes.value = res
             })
@@ -116,7 +124,8 @@ export default {
             openit,
             activeItem,
             dialog,
-            signReport
+            signReport,
+            firmaCoordinador
         }
 
     }
