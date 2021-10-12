@@ -66,7 +66,9 @@ export default {
 
             
             $store.dispatch('api/GetAllData', 'coordinadors').then(res => {
-                firmaCoordinador.value = res[0].firma
+                if(res[0].firma){
+                    firmaCoordinador.value = res[0].firma
+                }
             })
 
             $store.dispatch('api/GetAllDataFilteredV2', ['asesores', filterreq]).then(res => {
@@ -125,7 +127,7 @@ export default {
             activeItem,
             dialog,
             signReport,
-            firmaCoordinador
+            firmaCoordinador,
         }
 
     }

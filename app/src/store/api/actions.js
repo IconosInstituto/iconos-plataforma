@@ -4,6 +4,8 @@ import { QAjaxBar } from 'quasar'
 import { useStore } from 'vuex'
 
 
+
+
 export const Login = ({commit}, credentials) => {
     return new Promise((resolve, reject) => {
         api.post('/cockpit/authUser', credentials).then(res => {
@@ -39,8 +41,18 @@ export const GetUsers = ({commit}) => {
         reject({error:true, message:'Ocurrió un error.', data: error})
     })
 }
-
+//Returns only actives
 export const GetUsersByGroup = ({commit}, groupusers) => {
+    return new Promise((resolve, reject) => {
+        api.post('/cockpit/listUsers', {filter:{group:groupusers, active: true}}).then(res => {
+            resolve(res.data)
+        })
+    }, error => {
+        reject({error:true, message:'Ocurrió un error.', data: error})
+    })
+}
+//Also return inactive
+export const GetUsersByGroupAll = ({commit}, groupusers) => {
     return new Promise((resolve, reject) => {
         api.post('/cockpit/listUsers', {filter:{group:groupusers}}).then(res => {
             resolve(res.data)
@@ -191,12 +203,13 @@ export const SetPeriodo = ({commit}, periodo) => {
     return new Promise((resolve, reject) => {
         //Find active and remove state
         api.post('/collections/get/periodos', {filter:{actual: true}}).then(res => {
-            var reqPrev = {
-                _id: res.data.entries[0]._id,
-                actual: false
+            if(res.data.entries[0]){
+                var reqPrev = {
+                    _id: res.data.entries[0]._id,
+                    actual: false
+                }
+                api.post('/collections/save/periodos', {data:reqPrev})
             }
-            api.post('/collections/save/periodos', {data:reqPrev})
-        
         
             // Set new to state active
             var reqNext = {

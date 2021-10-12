@@ -78,7 +78,8 @@ export default {
         const asignaciones = ref([])
 
         const loadAsignaciones = () => {
-            $store.dispatch('api/GetAllDataFiltered', ['asignaciones', 'user_id', props.estudianteid]).then(res => {
+            console.log(props)
+            $store.dispatch('api/GetAllDataFiltered', ['asignaciones', 'estudiante', props.estudiantedata.user_id]).then(res => {
                 asignaciones.value = res
                 for(var i in res){
                     periodos.value = periodos.value.filter(function(value, index, arr){

@@ -1,17 +1,30 @@
 <template lang="pug">
 div
-    q-btn(label="Añadir estudiantes" unelevated color="primary" size="sm" no-caps @click="dialogOpen")
-    q-dialog(v-model="dialog")
+    q-btn(label="Administrar estudiantes" unelevated color="primary" size="sm" no-caps @click="dialogOpen")
+    q-dialog(v-model="dialog" full-width)
         q-card.shadow-24
-            q-toolbar
-                q-toolbar-title.text-body2 Generación: #[span.text-bold.text-primary {{generacion.name}}]
             q-card-section
-                q-list(dense separator)
-                    q-item(v-for="(i, index) in estudiantes")
-                        q-item-section(side): q-checkbox(v-model="i.currentGen" @click="addRemoveGen(i)")
-                        q-item-section
-                            .text-body1 {{i.name}}
-                            .text-caption.text-grey {{i.tituloInvestigacion}}
+                .row.full-width.q-col-gutter-md
+                    .col-6
+                        q-card.shadow-24.bg-dark.text-white: q-card-section
+                            q-list(dense separator)
+                                q-item: .text-h6 Estudiantes en #[span.text-bold.text-accent {{generacion.name}}] generación.
+                                template(v-for="(i, index) in estudiantes")
+                                    q-item( v-if="i.currentGen")
+                                        q-item-section(side): q-checkbox(v-model="i.currentGen" @click="addRemoveGen(i)" color="secondary")
+                                        q-item-section
+                                            .text-body1 {{i.user.name}}
+                                            .text-caption.text-grey Generación actual: #[strong {{i.generacion.name}}]
+                    .col-6
+                        q-card.shadow-24: q-card-section
+                            q-list(dense separator)
+                                q-item: .text-caption Estudiantes
+                                template(v-for="(i, index) in estudiantes")
+                                    q-item( v-if="!i.currentGen")
+                                        q-item-section(side): q-checkbox(v-model="i.currentGen" @click="addRemoveGen(i)")
+                                        q-item-section
+                                            .text-body1 {{i.user.name}}
+                                            .text-caption.text-grey Generación actual: #[strong {{i.generacion.name}}]
 
             q-inner-loading(:showing="loading")
 </template>
@@ -42,8 +55,11 @@ export default {
         const estudiantes = ref(null)
         const generacionModel = ref(null)
 
-        const loadStudents = () => {
+        
+
+        const loadStudents = async () => {
             loading.value = true
+            /*
             $store.dispatch('api/GetUsersByGroup', 'estudiante').then(res2 => {
                 estudiantes.value = []
                 for(var i in res2){
@@ -62,8 +78,15 @@ export default {
                     }
                     loading.value = false
                 })
+                
             })
+            */
 
+            estudiantes.value = await $store.dispatch('api/GetAllData', 'estudiantes')
+            for(var i in estudiantes.value){
+                estudiantes.value[i].currentGen = _.isEqual(estudiantes.value[i].generacion, props.generacion)
+            }
+            loading.value = false
         }
 
 
@@ -76,7 +99,6 @@ export default {
                 generacion: item.currentGen?props.generacion:''
             }
             $store.dispatch('api/SaveItem', req).then(res => {
-                console.log(res)
                 $q.notify('Estudiante actualizado')
             })
         }

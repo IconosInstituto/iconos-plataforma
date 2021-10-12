@@ -36,7 +36,7 @@ div
 
 <script>
 
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 

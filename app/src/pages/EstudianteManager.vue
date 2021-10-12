@@ -27,7 +27,7 @@ q-page(padding)
     .q-mt-xl: q-separator(spaced)
     
     periodos(:estudiantedata="userData" v-if="user && userData")
-        
+    
     //
       .q-mt-xl: q-separator(spaced)
 
@@ -98,6 +98,8 @@ export default {
       })
     }
     const loadItem = () => {
+
+      
       $store.dispatch('api/GetSingleUser', $route.params.id).then(res => {
         user.value = res
         // ------ call
@@ -107,6 +109,8 @@ export default {
           }
         })
       })
+
+
     }
     loadItem()
 

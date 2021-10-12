@@ -3,14 +3,15 @@ q-card().shadow-24
     q-card-section
         .text-center.text-body1 Notificaciones ({{lista.length}})
     q-card-section
-        q-list(dense separator)
-            q-item(v-for="(i, index) in lista" )
-                q-item-section
-                    q-item-label {{i.description}}
-                    q-item-label(caption) {{toDate(i._created)}}
-                q-item-section(side): .row.q-col-gutter-xs
-                    .col-12.col-sm-6: q-btn(v-if="i.sendto || i.sendto!=''" @click="gotoit(i, index)" unelevated icon="open_in_browser" color="primary" size="xs" padding="4px"): q-tooltip Ir a sección
-                    .col-12.col-sm-6: q-btn(@click="removeit(i, index)" unelevated icon="delete" color="negative" size="xs" padding="4px"): q-tooltip Eliminar notificación
+        q-scroll-area(style="height: 120px")
+            q-list(dense separator)
+                q-item(v-for="(i, index) in lista" )
+                    q-item-section
+                        q-item-label {{i.description}}
+                        q-item-label(caption) {{toDate(i._created)}}
+                    q-item-section(side): .row.q-col-gutter-xs
+                        .col-12.col-sm-6: q-btn(v-if="i.sendto || i.sendto!=''" @click="gotoit(i, index)" unelevated icon="open_in_browser" color="primary" size="xs" padding="4px"): q-tooltip Ir a sección
+                        .col-12.col-sm-6: q-btn(@click="removeit(i, index)" unelevated icon="delete" color="negative" size="xs" padding="4px"): q-tooltip Eliminar notificación
 
             div(v-if="lista.length==0").text-caption.text-center.text-grey Sin notificaciones
     q-inner-loading(:showing="loading")

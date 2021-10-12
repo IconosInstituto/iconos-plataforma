@@ -54,10 +54,12 @@ export default {
 
                     for(var x in itemsType){
                         const type = item[itemsType[x]]
-                        if(type.valor == 'excelente'){ series.value[itemsType[x]][0] += 1 }
-                        if(type.valor == 'bueno'){ series.value[itemsType[x]][1] += 1 }
-                        if(type.valor == 'satisfactorio'){ series.value[itemsType[x]][2] += 1 }
-                        if(type.valor == 'no satisfactorio'){ series.value[itemsType[x]][3] += 1 }
+                        if(type){
+                            if(type.valor == 'excelente'){ series.value[itemsType[x]][0] += 1 }
+                            if(type.valor == 'bueno'){ series.value[itemsType[x]][1] += 1 }
+                            if(type.valor == 'satisfactorio'){ series.value[itemsType[x]][2] += 1 }
+                            if(type.valor == 'no satisfactorio'){ series.value[itemsType[x]][3] += 1 }
+                        }
                     }
                 }
                 loading.value = false

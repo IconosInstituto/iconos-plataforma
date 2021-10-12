@@ -55,12 +55,13 @@ q-page(padding)
           q-card.bg-white.shadow-24
               q-card-section
                 .text-h6.text-primary.q-mb-md Fortalezas
-                .text-caption: q-option-group(:options="calificadoresAlt" type="radio" v-model="asesor.fortalezas")
+                .text-caption(v-for="(i, index) in calificadoresAlt"): q-checkbox(v-model="fortalezas" :val="i" :label="i" dense)
+
       .col-6
           q-card.bg-white.shadow-24
               q-card-section
                 .text-h6.text-primary.q-mb-md Debilidades
-                .text-caption: q-option-group(:options="calificadoresAlt" type="radio" v-model="asesor.debilidades")
+                .text-caption(v-for="(i, index) in calificadoresAlt"): q-checkbox(v-model="debilidades" :val="i" :label="i" dense)
             
       .col-12
           q-card.bg-white.shadow-24
@@ -150,6 +151,9 @@ export default {
     const estudiante = ref(null)
     const estudianteUser = ref(null)
 
+    const fortalezas = ref([])
+    const debilidades = ref([])
+
     const loadItems = () => {
       const req = {
         _id: $route.params.id
@@ -166,9 +170,18 @@ export default {
           //Load student's access info (name)
           $store.dispatch('api/GetSingleUser', estudiante.value.user_id).then(resEstUsr => {
             estudianteUser.value = resEstUsr
+          
+          
           })
 
         })
+
+        if(asesor.value.fortalezas){
+          fortalezas.value = asesor.value.fortalezas
+        }
+        if(asesor.value.debilidades){
+          debilidades.value = asesor.value.debilidades
+        }
         
       })
     }
@@ -197,8 +210,8 @@ export default {
             comentario: ''
           },
           desempeno: 'excelente',
-          fortalezas: '0',
-          debilidades: '0',
+          fortalezas: [],
+          debilidades: [],
           porcentaje: 0,
           calificacion: 10,
           cumplimiento: null,
@@ -212,6 +225,11 @@ export default {
 
     const saveAsesor = () => {
       asesor.value.coll = 'asesores'
+
+      asesor.value.fortalezas = fortalezas.value
+      asesor.value.debilidades = debilidades.value
+
+
       $store.dispatch('api/SaveItem', asesor.value).then(res => {
         $q.notify('Desempeño guardado')
         
@@ -231,6 +249,8 @@ export default {
     return {
       user,
       userData,
+      fortalezas,
+      debilidades,
       calificadores: [
         { label: 'Excelente', value: 'excelente' },
         { label: 'Bueno', value: 'bueno' },
@@ -238,10 +258,20 @@ export default {
         { label: 'No satisfactorio', value: 'no satisfactorio' },
       ],
       calificadoresAlt: [
-        { label: 'A', value: '0' },
-        { label: 'B', value: '1' },
-        { label: 'C', value: '2' },
-        { label: 'D', value: '3' },
+        'Delimitación epistemológica del problema',
+        'Delimitación conceptual',
+        'Relaciones conceptuales',
+        'Aplicaciones conceptuales con lo empírico',
+        'Escritura, organización y formato del texto',
+        'Relación de las partes del texto',
+        'Uso de fuentes y documentos',
+        'Delimitación metodológica de la investigación',
+        'Construcción de método de análisis',
+        'Construcción de categorías de obseervación y análisis',
+        'Desarrollo del análisis',
+        'Disposición a contribuir al campo social',
+        'Influencia en la trayectoria del doctorado',
+        'Aporte social cognitivo, epistemológico o tecnológico'
       ],
       options: { labels: ['Avance'] },
       asesor,

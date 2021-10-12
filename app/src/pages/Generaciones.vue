@@ -1,3 +1,4 @@
+vue3
 <template lang="pug">
 q-page(padding)
   .text-h6.text-primary Generaciones
@@ -9,13 +10,14 @@ q-page(padding)
               .col.text-right: q-btn(label="Crear generación"  color="primary" unelevated no-caps :disabled="newItem.name==''" type="submit")
       template(v-slot:body="props")
           q-tr(:props="props")
-              q-td(key="name" :props="props").text-bold {{props.row.name}}
+              q-td(key="name" :props="props")
+                q-btn(@click="estudiantesFilter(props.row.name)" flat :label="props.row.name" no-caps): q-tooltip Ver generación en área de estudiantes
 
               q-td(key="add" :props="props"): addStudent(:generacion="props.row")
               q-td(key="actions" :props="props")
-                q-btn(icon="delete" @click="deleteItem(props.row)" size="xs" padding="4px" color="negative"): q-tooltip Eliminar
+                q-btn(icon="delete" @click="deleteItem(props.row)" size="xs" padding="4px" color="negative" round unelevated): q-tooltip Eliminar
 
-  
+
   
   q-separator(spaced)
   
@@ -25,9 +27,8 @@ q-page(padding)
 
 <script>
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import editThis from 'components/editThis.vue'
 import { date, useQuasar } from 'quasar'
 import addStudent from 'components/generaciones/addStudent'
 export default {
@@ -36,7 +37,7 @@ export default {
     },
   setup () {
     const $q = useQuasar()
-    const $route = useRoute()
+    const $router = useRouter()
     const $store = useStore()
 
     
@@ -46,7 +47,7 @@ export default {
     const items = ref([])
     const columns = [
         { name: 'name', label: 'Nombre', field: 'name', align:'left' },
-        { name: 'add', label: 'Añadir estudiantes', field: 'add' },
+        { name: 'add', label: 'Añadir estudiantes', field: 'add', align:'center' },
         { name: 'actions' }
     ]
 
@@ -73,7 +74,8 @@ export default {
 
     const deleteItem = (item) => {
       $q.dialog({
-        title: 'Eliminar generacion',
+        title: 'Eliminar generación',
+        message: 'Los estudiantes ligados a esta generación seguirán mostrando el nombre en su información.',
         cancel: 'Cancelar',
         ok: 'Eliminar',
       }).onOk(()=>{
@@ -85,6 +87,12 @@ export default {
     }
 
     loadItem()
+
+
+    // --
+    const estudiantesFilter = (name) => {
+      $router.push({path: '/estudiantes', query: {filter: name}})
+    }
    
     return {
       loadItem,
@@ -93,7 +101,8 @@ export default {
       columns,
       newItem,
       submitNew,
-      deleteItem
+      deleteItem,
+      estudiantesFilter
     }
   },
 

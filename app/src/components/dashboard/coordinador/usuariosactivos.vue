@@ -27,6 +27,7 @@ export default {
         const inactivos = ref([])
         const loading = ref(true)
         const findUsers = () => {
+            
             $store.dispatch('api/GetUsersByGroup', props.usergroup).then(res => {
                     lista.value = res
                     for(var i  in res){

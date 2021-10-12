@@ -29,8 +29,11 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/UserManager.vue') },
-      { path: '/estudiantes', component: () => import('pages/UserManager.vue') },
-      { path: '/docentes', component: () => import('pages/UserManager.vue') },
+      { path: '/estudiantes', component: () => import('pages/coordinador/Estudiantes.vue') },
+      { path: '/docentes', component: () => import('pages/coordinador/Docentes.vue') },
+      //Previous
+      { path: '/estudiantes2', component: () => import('pages/UserManager.vue') },
+      { path: '/docentes2', component: () => import('pages/UserManager.vue') },
     ],
     meta: { forAuth: true, group: ['admin', 'coordinador'] }
   },
@@ -38,7 +41,8 @@ const routes = [
     path: '/estudiante',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/estudiante/:id', component: () => import('pages/EstudianteManager.vue') },
+      { path: '/estudiante/:id', component: () => import('pages/coordinador/Estudiante.vue') },
+      { path: '/estudiantepre/:id', component: () => import('pages/EstudianteManager.vue') },
     ],
     meta: { forAuth: true, group: ['admin', 'coordinador'] }
   },
@@ -46,7 +50,8 @@ const routes = [
     path: '/docente',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/docente/:id', component: () => import('pages/DocenteManager.vue') },
+      { path: '/docente/:id', component: () => import('pages/coordinador/Docente.vue') },
+      { path: '/docentepre/:id', component: () => import('pages/DocenteManager.vue') },
     ],
     meta: { forAuth: true, group: ['admin', 'coordinador'] }
   },
