@@ -1,34 +1,35 @@
 <template lang="pug">
 q-page(padding)
     template(v-if="reportes && estudiantes")
-        q-table.shadow-0(:loading="loading" no-data-label="Sin datos" :rows="reportes" :columns="columns")
-            template(v-slot:body="props")
-                q-tr(:props="props" @click="openit(props.row)").cursor-pointer
-                    q-td(key="estudiante" :props="props")
-                        .text-caption {{findUserData(props.row.asignacion.estudiante.user_id).name}}
-                        .text-body2.text-dark.text-bold {{ props.row.asignacion.estudiante.tituloInvestigacion}}
-                        .porcentaje: div(:style="'width:'+ props.row.porcentaje + '%'")
-                    q-td(key="generacion" :props="props") {{ props.row.asignacion.estudiante.generacion.name }}
-                    q-td(key="periodo" :props="props") {{props.row.asignacion.periodo.name}}
-                    q-td(key="calificacion" :props="props") {{props.row.calificacion}}
-                    q-td(key="firmaconacyt" :props="props") {{props.row.firmaconacyt ? 'Firmado' : '-'}}
-                    q-td(key="firmaCoordinador" :props="props") {{props.row.firmaCoordinador ? 'Firmado' : '-'}}
-        q-dialog(v-model="dialog")
-            q-card
-                q-card-section
-                    //.row.q-col-gutter-md.q-mb-md
-                        .col-12: q-card.shadow-24
-                            q-card-section.text-center
-                                .text-grey Lector
-                                div.text-body1.text-bold.text-secondary {{activeItem.docenteName}}
-                    div.text-center.q-my-lg(v-if="activeItem"): conacytPrint(:asignacion="activeItem")
-                    desempeno(:item="activeItem" conacyt=true)
-                q-card-section.text-center(v-if="!activeItem.firmaCoordinador")
-                    q-btn(label="Aprobar y firmar reporte " no-caps color="primary" @click="signReport")
-                q-card-section.text-center(v-else)
-                    .text-h6.text-primary.q-mb-md Firmado por coordinador
-                    .text-center
-                        q-img(style="width: 100%; max-width: 200px" :src="firmaCoordinador")
+        q-card.shadow-24: q-card-section
+            q-table.shadow-0(:loading="loading" no-data-label="Sin datos" :rows="reportes" :columns="columns")
+                template(v-slot:body="props")
+                    q-tr(:props="props" @click="openit(props.row)").cursor-pointer
+                        q-td(key="estudiante" :props="props")
+                            .text-caption {{findUserData(props.row.asignacion.estudiante.user_id).name}}
+                            .text-body2.text-dark.text-bold {{ props.row.asignacion.estudiante.tituloInvestigacion}}
+                            .porcentaje: div(:style="'width:'+ props.row.porcentaje + '%'")
+                        q-td(key="generacion" :props="props") {{ props.row.asignacion.estudiante.generacion.name }}
+                        q-td(key="periodo" :props="props") {{props.row.asignacion.periodo.name}}
+                        q-td(key="calificacion" :props="props") {{props.row.calificacion}}
+                        q-td(key="firmaconacyt" :props="props") {{props.row.firmaconacyt ? 'Firmado' : '-'}}
+                        q-td(key="firmaCoordinador" :props="props") {{props.row.firmaCoordinador ? 'Firmado' : '-'}}
+            q-dialog(v-model="dialog")
+                q-card
+                    q-card-section
+                        //.row.q-col-gutter-md.q-mb-md
+                            .col-12: q-card.shadow-24
+                                q-card-section.text-center
+                                    .text-grey Lector
+                                    div.text-body1.text-bold.text-secondary {{activeItem.docenteName}}
+                        div.text-center.q-my-lg(v-if="activeItem"): conacytPrint(:asignacion="activeItem")
+                        desempeno(:item="activeItem" conacyt=true)
+                    q-card-section.text-center(v-if="!activeItem.firmaCoordinador")
+                        q-btn(label="Aprobar y firmar reporte " no-caps color="primary" @click="signReport")
+                    q-card-section.text-center(v-else)
+                        .text-h6.text-primary.q-mb-md Firmado por coordinador
+                        .text-center
+                            q-img(style="width: 100%; max-width: 200px" :src="firmaCoordinador")
 
 </template>
 <script>

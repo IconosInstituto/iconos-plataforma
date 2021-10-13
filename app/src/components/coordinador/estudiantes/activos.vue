@@ -1,27 +1,28 @@
 <template lang="pug">
+q-card.shadow-24: q-card-section
+    q-table(:rows="estudiantes" :columns="columns" :pagination="pagination" v-if="estudiantes.length>0" :filter="filter").shadow-0
+        template(v-slot:top)
+            .row.full-width
+                .col-6: .text-h6 Estudiantes
+                .col-6
+                    q-input(label="Filtrar" standout="bg-primary text-white" v-model="filter" unelevated style="max-width:200px" dense clearable).q-ml-auto
+                        //template(v-slot:append): q-icon(name="search")
 
-q-table(:rows="estudiantes" :columns="columns" :pagination="pagination" v-if="estudiantes.length>0" :filter="filter").shadow-0
-    template(v-slot:top)
-        .row.full-width
-            .col-6: .text-h6 Estudiantes
-            .col-6
-                q-input(label="Filtrar" standout="bg-primary text-white" v-model="filter" unelevated style="max-width:200px" dense clearable).q-ml-auto
-                    //template(v-slot:append): q-icon(name="search")
-
-    template(v-slot:loading)
-        q-inner-loading(showing color="primary")
-    template(v-slot:body="props")
-        q-tr(:props="props" v-if="props.row.user" @click="gotoStudent(props.row)" :class="colorByStatus(props.row.status)").cursor-pointer
-            q-td(key="user" :props="props").text-bold {{props.row.user.user}}
-            q-td(key="name" :props="props") {{props.row.user.name}}
-            q-td(key="email" :props="props") {{props.row.user.email}}
-            q-td(key="generacion" :props="props") {{props.row.generacion.name}}
-            q-td(key="tituloInvestigacion" :props="props") {{props.row.tituloInvestigacion}}
-            q-td(key="status" :props="props")
-                q-icon(v-if="props.row.status == 'ACTIVO'" name="done_outline" color="positive"): q-tooltip {{props.row.status}}
-                q-icon(v-if="props.row.status == 'EGRESADO'" name="school" color="info"): q-tooltip {{props.row.status}}
-                q-icon(v-if="props.row.status == 'BAJA'" name="block" color="grey"): q-tooltip {{props.row.status}}
-            
+        template(v-slot:loading)
+            q-inner-loading(showing color="primary")
+        template(v-slot:body="props")
+            q-tr(:props="props" v-if="props.row.user" @click="gotoStudent(props.row)" :class="colorByStatus(props.row.status)").cursor-pointer
+                q-td(key="user" :props="props").text-bold {{props.row.user.user}}
+                q-td(key="name" :props="props") {{props.row.user.name}}
+                q-td(key="email" :props="props") {{props.row.user.email}}
+                q-td(key="generacion" :props="props") {{props.row.generacion?props.row.generacion.name:'-'}}
+                
+                q-td(key="tituloInvestigacion" :props="props") {{props.row.tituloInvestigacion || 'Sin título'}}
+                q-td(key="status" :props="props")
+                    q-icon(v-if="props.row.status == 'ACTIVO'" name="done_outline" color="positive"): q-tooltip {{props.row.status}}
+                    q-icon(v-if="props.row.status == 'EGRESADO'" name="school" color="info"): q-tooltip {{props.row.status}}
+                    q-icon(v-if="props.row.status == 'BAJA'" name="block" color="grey"): q-tooltip {{props.row.status}}
+                
 </template>
 <script>
 import {ref, inject } from 'vue'

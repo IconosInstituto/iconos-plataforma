@@ -1,6 +1,6 @@
 <template lang="pug">
-div
-    q-table(:rows="inactivos" :columns="columns" dense :pagination="pagination" :class="inactivos.length==0?'bg-grey':''").shadow-0
+q-card.shadow-24: q-card-section
+    q-table(:rows="inactivos" :columns="columns" dense :pagination="pagination" :class="inactivos.length==0?'text-grey-4':''").shadow-0
         template(v-slot:top)
             .text-h6 Usuarios no habilitados
         template(v-slot:loading)

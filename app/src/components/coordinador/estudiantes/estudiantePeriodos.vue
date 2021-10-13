@@ -104,10 +104,12 @@ export default {
             for(var pa in periodosAsignados.value){
                 loadAsesores(pa)
             }
+            loading.value = false
         }
         loadItems()
         //---------
         const loadAsesores = async (pa) => {
+            loading.value = true
             const periodo = periodosAsignados.value[pa]
             periodo.activeDates = false
             periodosAsignados.value[pa].asesores = null

@@ -1,24 +1,25 @@
 vue3
 <template lang="pug">
 q-page(padding)
-  .text-h6.text-primary Generaciones
-  q-table.shadow-0(:loading="loading" no-data-label="Sin datos" :rows="items" :columns="columns")
-      template(v-slot:top)
-          
-          q-card.shadow-24.bg-dark.full-width.q-my-md: q-card-section: q-form(@submit.prevent="submitNew").row.q-col-gutter-md.items-center
-              .col: q-input(v-model="newItem.name" label="Nombre" standout="bg-primary text-white" dense dark required)
-              .col.text-right: q-btn(label="Crear generación"  color="primary" unelevated no-caps :disabled="newItem.name==''" type="submit")
-      template(v-slot:body="props")
-          q-tr(:props="props")
-              q-td(key="name" :props="props")
-                q-btn(@click="estudiantesFilter(props.row.name)" flat :label="props.row.name" no-caps): q-tooltip Ver generación en área de estudiantes
+  q-card.shadow-24: q-card-section
+    .text-h6.text-primary Generaciones
+    q-table.shadow-0(:loading="loading" no-data-label="Sin datos" :rows="items" :columns="columns")
+        template(v-slot:top)
+            
+            q-card.shadow-24.bg-dark.full-width.q-my-md: q-card-section: q-form(@submit.prevent="submitNew").row.q-col-gutter-md.items-center
+                .col: q-input(v-model="newItem.name" label="Nombre" standout="bg-primary text-white" dense dark required)
+                .col.text-right: q-btn(label="Crear generación"  color="primary" unelevated no-caps :disabled="newItem.name==''" type="submit")
+        template(v-slot:body="props")
+            q-tr(:props="props")
+                q-td(key="name" :props="props")
+                  q-btn(@click="estudiantesFilter(props.row.name)" flat :label="props.row.name" no-caps): q-tooltip Ver generación en área de estudiantes
 
-              q-td(key="add" :props="props"): addStudent(:generacion="props.row")
-              q-td(key="actions" :props="props")
-                q-btn(icon="delete" @click="deleteItem(props.row)" size="xs" padding="4px" color="negative" round unelevated): q-tooltip Eliminar
+                q-td(key="add" :props="props"): addStudent(:generacion="props.row")
+                q-td(key="actions" :props="props")
+                  q-btn(icon="delete" @click="deleteItem(props.row)" size="xs" padding="4px" color="negative" round unelevated): q-tooltip Eliminar
 
 
-  
+    
   q-separator(spaced)
   
   

@@ -1,6 +1,6 @@
 <template lang="pug">
 
-div
+q-card.shadow-24: q-card-section
     q-table(:rows="docentes" :columns="columns" :pagination="pagination" v-if="docentes.length>0").shadow-0
         template(v-slot:top)
             .text-h6 Docentes

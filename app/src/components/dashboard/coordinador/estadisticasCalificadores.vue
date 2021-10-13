@@ -15,6 +15,7 @@
             .text-body2.text-dark Redacción
             apexchart(width="100%" type="pie" :options="options" :series="series.redaccion")
             q-inner-loading(:showing="loading")
+
     .col-3: q-card.shadow-24
         q-card-section.text-center
             .text-body2.text-dark Argumentación
