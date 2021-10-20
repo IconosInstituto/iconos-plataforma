@@ -54,7 +54,7 @@ div
                                 q-card(v-if="i.grado!=undefined").shadow-14.q-mt-sm: q-card-section.q-py-xs
                                     .text-caption.text-grey Examen de grado
                                     .text-body1 {{i.grado}}
-                    periodoDesinscribir(:asignacion="i" :key="index")
+                    periodoDesinscribir(:asignacion="i" :key="index" @updated="loadItems")
 
 
 
@@ -101,6 +101,7 @@ export default {
             loading.value = true
             periodosAsignados.value = []
             periodosAsignados.value = await $store.dispatch('api/GetAllDataFiltered', ['asignaciones', 'estudiante', student.value._id])
+            console.log(periodosAsignados)
             for(var pa in periodosAsignados.value){
                 loadAsesores(pa)
             }
@@ -127,7 +128,6 @@ export default {
                 coloquio1: asignacion.coloquio1,
                 coloquio2: asignacion.coloquio2,
                 candidatura: asignacion.candidatura,
-                grado: asignacion.grado,
                 coll: 'asignaciones'
             }
             const res = await $store.dispatch('api/SaveItem', req)

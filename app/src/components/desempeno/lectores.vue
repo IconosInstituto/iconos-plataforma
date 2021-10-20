@@ -54,8 +54,13 @@ export default {
 
 
         const openLector = (item) => {
-            activeItem.value = item
-            dialog.value = true
+
+            if(item._created != item._modified){
+                activeItem.value = item
+                dialog.value = true
+            } else {
+                $q.notify('El lector aún no ha guardado su reporte.')
+            }
         }
 
         return {

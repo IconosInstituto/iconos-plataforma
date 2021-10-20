@@ -69,7 +69,10 @@ export default {
                 const asignacion = seleccionDirector.value[i];
                 let req = {
                     docente: props.docente.user_id,
-                    asignacion: asignacion,
+                    asignacion: {
+                        _id: asignacion._id,
+                        link: "asignaciones"
+                    },
                     tipo: 'director',
                     coll: 'asesores'
                 }
@@ -79,7 +82,10 @@ export default {
                 const asignacion = seleccionLector.value[i];
                 let req = {
                     docente: props.docente.user_id,
-                    asignacion: asignacion,
+                    asignacion: {
+                        _id: asignacion._id,
+                        link: "asignaciones"
+                    },
                     tipo: 'lector',
                     coll: 'asesores'
                 }

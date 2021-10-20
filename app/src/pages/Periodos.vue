@@ -25,7 +25,6 @@ q-page(padding)
               q-td(key="actions" :props="props")
                 q-btn(icon="delete" @click="deleteItem(props.row)" size="xs" color="negative" round unelevated): q-tooltip Eliminar
 
-
   
 </template>
 

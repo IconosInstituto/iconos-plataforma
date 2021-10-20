@@ -69,13 +69,22 @@ export default {
             const saveUser = {
                 coll: 'estudiantes',
                 _id: userItem.value._id,
-                generacion: generacionChoose.value,
+                generacion: {
+                    _id: generacionChoose.value._id,
+                    link: "generaciones"
+                },
             }
             const storeGeneracion = await $store.dispatch('api/SaveItem', saveUser)
             const savePeriodo = {
                 coll: 'asignaciones',
-                periodo: periodoChoose.value,
-                estudiante: userItem.value,
+                periodo: {
+                    _id: periodoChoose.value,
+                    link: "periodos"
+                },
+                estudiante: {
+                    _id: userItem.value._id,
+                    link: "estudiantes"
+                },
             }
             
             const storePeriodo = await $store.dispatch('api/SaveItem', savePeriodo)

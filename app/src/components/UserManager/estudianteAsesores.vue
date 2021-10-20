@@ -82,7 +82,10 @@ export default {
             var reqItem = {
                 docente: nuevoItem.value._id,
                 tipo: nuevoTipo.value,
-                asignacion: props.asignacion,
+                asignacion: {
+                    _id: props.asignacion._id,
+                    link: "asignaciones"
+                },
                 coll: 'asesores'
             }
             $store.dispatch('api/SaveItem', reqItem).then(res => {

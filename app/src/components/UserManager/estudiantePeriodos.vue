@@ -55,8 +55,14 @@ export default {
             dialog.value = false
             for(var i in asignadosNuevos.value){
                 const asignItem = {
-                    estudiante: props.estudiantedata,
-                    periodo: asignadosNuevos.value[i],
+                    estudiante: {
+                        _id: props.estudiantedata,
+                        link: "estudiantes"
+                    },
+                    periodo: {
+                        _id: asignadosNuevos.value[i]._id,
+                        link: "periodos"
+                    },
                     coll: 'asignaciones'
                 }
                 $store.dispatch('api/SaveItem', asignItem).then(res => {

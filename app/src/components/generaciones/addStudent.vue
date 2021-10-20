@@ -14,7 +14,7 @@ div
                                         q-item-section(side): q-checkbox(v-model="i.currentGen" @click="addRemoveGen(i)" color="secondary")
                                         q-item-section
                                             .text-body1 {{i.user.name}}
-                                            .text-caption.text-grey Generación actual: #[strong {{i.generacion.name}}]
+                                            .text-caption.text-grey(v-if="i.currentGen") Generación actual: #[strong {{i.generacion.name}}]
                     .col-6
                         q-card.shadow-24: q-card-section
                             q-list(dense separator)
@@ -24,8 +24,7 @@ div
                                         q-item-section(side): q-checkbox(v-model="i.currentGen" @click="addRemoveGen(i)")
                                         q-item-section
                                             .text-body1 {{i.user.name}}
-                                            .text-caption.text-grey Generación actual: #[strong {{i.generacion.name}}]
-
+                                            .text-caption.text-grey(v-if="i.generacion") Generación actual: #[strong {{ i.generacion.name }}]
             q-inner-loading(:showing="loading")
 </template>
 <script>
@@ -59,44 +58,35 @@ export default {
 
         const loadStudents = async () => {
             loading.value = true
-            /*
-            $store.dispatch('api/GetUsersByGroup', 'estudiante').then(res2 => {
-                estudiantes.value = []
-                for(var i in res2){
-                    if(res2[i].active){
-                    estudiantes.value.push(res2[i])
-                    }
-                }
-                // ------ call
-                $store.dispatch('api/GetAllData', 'estudiantes').then(res3 => {
-                    for(var i in estudiantes.value){
-                        const mergeUsers = res3.filter(function(value, index, arr){
-                            return value.user_id == estudiantes.value[i]._id
-                        })
-                        _.merge(estudiantes.value[i], mergeUsers[0])
-                        estudiantes.value[i].currentGen = _.isEqual(estudiantes.value[i].generacion, props.generacion)
-                    }
-                    loading.value = false
-                })
-                
-            })
-            */
-
             estudiantes.value = await $store.dispatch('api/GetAllData', 'estudiantes')
             for(var i in estudiantes.value){
-                estudiantes.value[i].currentGen = _.isEqual(estudiantes.value[i].generacion, props.generacion)
+                if(estudiantes.value[i].generacion){
+                    estudiantes.value[i].currentGen = _.isEqual(estudiantes.value[i].generacion.name, props.generacion.name)
+                } else {
+                    estudiantes.value[i].currentGen = false
+                }
             }
             loading.value = false
         }
 
 
         const addRemoveGen = (item) => {
+            var newGen = {
+                _id: props.generacion._id,
+                link: "generaciones"
+            }
 
-
+            if(!item.currentGen){
+                newGen = null
+                item.generacion = null
+            } else {
+                item.generacion = props.generacion
+            }
             var req = {
                 coll: 'estudiantes',
                 _id: item._id,
-                generacion: item.currentGen?props.generacion:''
+                //generacion: item.currentGen?props.generacion:''
+                generacion: newGen
             }
             $store.dispatch('api/SaveItem', req).then(res => {
                 $q.notify('Estudiante actualizado')

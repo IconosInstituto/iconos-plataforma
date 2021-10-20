@@ -100,6 +100,7 @@ export default {
 
 
             let asesoresAgregadosCount = 0
+
             //Director
             for(var ll in agregarDirectores){
                 const asesor = agregarDirectores[ll]
@@ -107,7 +108,10 @@ export default {
                 delete asignacion.asesores
                 let req = {
                     docente: asesor,
-                    asignacion: asignacion,
+                    asignacion: {
+                        _id: asignacion._id,
+                        link: "asignaciones"
+                    },
                     tipo: 'director',
                     coll: 'asesores',
                 }
@@ -115,19 +119,24 @@ export default {
                 asesoresAgregadosCount++
             }
             //Lector
+            
             for(var ll in agregarLectores){
                 const asesor = agregarLectores[ll]
                 const asignacion = props.asignacion
                 delete asignacion.asesores
                 const req = {
                     docente: asesor,
-                    asignacion: asignacion,
+                    asignacion: {
+                        _id: asignacion._id,
+                        link: "asignaciones"
+                    },
                     tipo: 'lector',
                     coll: 'asesores',
                 }
                 const res = await $store.dispatch('api/SaveItem', req)
                 asesoresAgregadosCount++
             }
+
 
             
 

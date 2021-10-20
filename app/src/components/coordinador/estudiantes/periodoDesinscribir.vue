@@ -42,10 +42,16 @@ export default {
                 cancel: 'Cancelar',
                 ok: 'Eliminar',
             }).onOk(()=>{
-                deletePeriodo(item)
+                deletePeriodoAsignacion()
             })
         }
 
+        const deletePeriodoAsignacion = async () => {
+
+            const asignaRES = await $store.dispatch('api/RemoveItem', ['asignaciones', '_id', props.asignacion._id])
+            $q.notify('Inscripción a periodo eliminada')
+            context.emit('updated')
+        }
   
         
         return {

@@ -74,7 +74,7 @@ export const GetSingleUser = ({commit}, userid) => {
 
 export const GetAllData = ({commit}, collectionname) => {
     return new Promise((resolve, reject) => {
-        api.post('/collections/get/'+collectionname, {populate:-1}).then(res => {
+        api.post('/collections/get/'+collectionname, {populate:10}).then(res => {
             resolve(res.data.entries)
         })
     }, error => {
@@ -86,7 +86,7 @@ export const GetAllDataFiltered = ({commit}, body) => {
     let filterVL = {}
     filterVL[body[1]] = body[2]
     return new Promise((resolve, reject) => {
-        api.post('/collections/get/'+body[0], {filter:filterVL, populate:-1}).then(res => {
+        api.post('/collections/get/'+body[0], {filter:filterVL, populate:10}).then(res => {
             resolve(res.data.entries)
         })
     }, error => {
@@ -98,7 +98,7 @@ export const GetAllDataFilteredV2 = ({commit}, body) => {
     //body = [collection, {"key":"value"}]
     let filterVL = body[1]
     return new Promise((resolve, reject) => {
-        api.post('/collections/get/'+body[0], {filter:filterVL, populate:-1}).then(res => {
+        api.post('/collections/get/'+body[0], {filter:filterVL, populate:10}).then(res => {
             resolve(res.data.entries)
         })
     }, error => {
@@ -111,7 +111,7 @@ export const GetAllDataFilteredV2 = ({commit}, body) => {
 export const GetSingleData = ({commit}, body) => {
     //body = {coll, filter}
     return new Promise((resolve, reject) => {
-        api.post('/collections/get/'+body.coll, {filter:{user_id:body.id}, populate:-1}).then(res => {
+        api.post('/collections/get/'+body.coll, {filter:{user_id:body.id}, populate:10}).then(res => {
             resolve(res.data.entries)
         })
     }, error => {

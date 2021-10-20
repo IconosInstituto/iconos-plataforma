@@ -5,13 +5,13 @@ div
             q-tr(:props="props" @click="openit(props.row)").cursor-pointer
                 
                 q-td(key="estudiante" :props="props")
-                        .text-caption {{props.row.asignacion.estudiante_user.name}}
+                        .text-caption {{props.row.estudiante_user.name}}
                         .text-body2.text-dark.text-bold {{ props.row.asignacion.estudiante.tituloInvestigacion}}
                         .porcentaje: div(:style="'width:'+ props.row.porcentaje + '%'")
                 
                 q-td(key="generacion" :props="props")
-                    template(v-if="props.row.asignacion.estudiante.generacion") {{ props.row.asignacion.estudiante.generacion.name }}
-                    template(v-else) No asignado
+                    template(v-if="props.row.asignacion.estudiante.generacion.name") {{ props.row.asignacion.estudiante.generacion.name }}
+                    template(v-else) No asignado 
                 q-td(key="periodo" :props="props") {{props.row.asignacion.periodo.name}}
                 q-td(key="tipo" :props="props" :class="props.row.tipo=='director'?'text-primary':'text-secondary'").text-capitalize.text-bold {{props.row.tipo}}
                 q-td(key="calificacion" :props="props") {{props.row.calificacion}}
@@ -55,15 +55,10 @@ export default {
 
             for(var i in res){
                 const itm = res[i]
-                console.log(itm.asignacion.estudiante.status)
                 if(itm.asignacion.estudiante.status!='ACTIVO'){
-                    console.log('remover '+i)
                 }
             }
             asignaciones.value = res
-            console.log(res)
-
-
         }
         
         loadItems()

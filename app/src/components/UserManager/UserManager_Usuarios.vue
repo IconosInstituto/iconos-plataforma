@@ -142,10 +142,8 @@ export default {
                     const estudianteDB = {
                         user_id : userid,
                         coll: 'estudiantes',
-                        generacion: '',
                         beca: '',
                         status: 'ACTIVO',
-                        periodo: '',
                         coloquio: '',
                         tituloInvestigacion:''
                     }

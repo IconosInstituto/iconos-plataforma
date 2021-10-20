@@ -58,9 +58,15 @@ export default {
         const inscribir = async (periodo) => {
             const reqAsignacion = {
                 coll: 'asignaciones',
-                periodo: periodo,
-                estudiante: props.student,
-            }
+                periodo: {
+                    _id:periodo._id,
+                    link:"periodos"
+                },
+                estudiante: {
+                    _id: props.student._id,
+                    link:"estudiantes"
+                },
+            }            
             const res = await $store.dispatch('api/SaveItem', reqAsignacion)
             dialog.value = false
             $q.notify('Estudiante inscrito a periodo')
